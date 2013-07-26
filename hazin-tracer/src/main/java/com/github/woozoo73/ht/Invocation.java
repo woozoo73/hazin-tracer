@@ -1,52 +1,35 @@
+/*
+ * Copyright 2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.github.woozoo73.ht;
 
-import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
 import org.aspectj.lang.JoinPoint;
 
-/**
- * 메소드 호출.
- * 
- * @author woozoo73
- */
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlType(propOrder = { "depth", "durationNanoTime", "durationPercentage", "joinPointInfo", "childInvocationList",
-		"throwable", "result" })
-public class Invocation implements Serializable {
+public class Invocation {
 
-	private static final long serialVersionUID = 1L;
-
-	private static NumberFormat timeFormat = new DecimalFormat("###,##0.00");
-
-	@XmlAttribute
 	private Integer depth = 0;
 
-	@XmlElementWrapper(name = "childInvocationList")
-	@XmlElement(name = "invocation")
 	private List<Invocation> childInvocationList = new ArrayList<Invocation>();
 
 	private JoinPoint joinPoint;
 
-	@XmlElement(name = "joinPoint")
-	private JoinPointInfo joinPointInfo;
-
-	@XmlAttribute
 	private Long durationNanoTime;
 
-	@XmlAttribute
 	private Double durationPercentage = 100D;
 
 	private Long startNanoTime;
@@ -55,13 +38,7 @@ public class Invocation implements Serializable {
 
 	private Object returnValue;
 
-	@XmlElement(name = "returnValue")
-	private String result;
-
 	private Throwable t;
-
-	@XmlElement
-	private String throwable;
 
 	public boolean equalsJoinPoint(Invocation another) {
 		if (another == null) {
@@ -97,7 +74,7 @@ public class Invocation implements Serializable {
 
 		return null;
 	}
-
+	
 	public void start() {
 		startNanoTime = System.nanoTime();
 	}
@@ -156,15 +133,6 @@ public class Invocation implements Serializable {
 
 	public void setJoinPoint(JoinPoint joinPoint) {
 		this.joinPoint = joinPoint;
-		this.joinPointInfo = new JoinPointInfo(joinPoint);
-	}
-
-	public JoinPointInfo getJoinPointInfo() {
-		return joinPointInfo;
-	}
-
-	public void setJoinPointInfo(JoinPointInfo joinPointInfo) {
-		this.joinPointInfo = joinPointInfo;
 	}
 
 	public Long getDurationNanoTime() {
@@ -189,17 +157,6 @@ public class Invocation implements Serializable {
 
 	public void setReturnValue(Object returnValue) {
 		this.returnValue = returnValue;
-		if (returnValue != null) {
-			this.result = returnValue.toString();
-		}
-	}
-
-	public String getResult() {
-		return result;
-	}
-
-	public void setResult(String result) {
-		this.result = result;
 	}
 
 	public Throwable getT() {
@@ -208,31 +165,6 @@ public class Invocation implements Serializable {
 
 	public void setT(Throwable t) {
 		this.t = t;
-		this.throwable = t.toString();
-	}
-
-	public String getThrowable() {
-		return throwable;
-	}
-
-	public void setThrowable(String throwable) {
-		this.throwable = throwable;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("signature=");
-		builder.append(joinPoint.getSignature()).append(", ");
-		builder.append("duration=");
-		builder.append("(");
-		builder.append(timeFormat.format(getDurationMiliTime()));
-		builder.append("ms");
-		builder.append(":");
-		builder.append(timeFormat.format(getDurationPercentage()));
-		builder.append("%");
-		builder.append(")");
-		return builder.toString();
 	}
 
 }
