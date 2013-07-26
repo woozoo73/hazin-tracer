@@ -20,6 +20,11 @@ import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
 
+/**
+ * Invocation data.
+ * 
+ * @author woozoo73
+ */
 public class Invocation {
 
 	private Integer depth = 0;

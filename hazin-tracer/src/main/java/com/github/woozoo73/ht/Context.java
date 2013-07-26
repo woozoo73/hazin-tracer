@@ -17,6 +17,11 @@ package com.github.woozoo73.ht;
 
 import java.util.Stack;
 
+/**
+ * Invocation context.
+ * 
+ * @author woozoo73
+ */
 public class Context {
 
 	private static ThreadLocal<Invocation> ENDPOINT_INVOCATION_CONTEXT = new ThreadLocal<Invocation>();

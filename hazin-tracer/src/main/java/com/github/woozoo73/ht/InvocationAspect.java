@@ -27,6 +27,11 @@ import org.aspectj.lang.annotation.Pointcut;
 
 import com.github.woozoo73.ht.format.DefaultFormat;
 
+/**
+ * Invocation aspect.
+ * 
+ * @author woozoo73
+ */
 @Aspect
 public class InvocationAspect {
 
