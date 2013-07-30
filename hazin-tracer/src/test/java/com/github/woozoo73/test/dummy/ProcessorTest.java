@@ -28,12 +28,16 @@ public class ProcessorTest extends AbstractSpringTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
 	}
 
 	@Test
-	public void test() {
+	public void testProcess() {
 		processor.process("foo");
 	}
-	
+
+	@Test(expected = IllegalStateException.class)
+	public void testProcessWithNull() {
+		processor.process(null);
+	}
+
 }

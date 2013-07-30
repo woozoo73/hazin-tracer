@@ -34,6 +34,10 @@ public class Processor {
 	}
 
 	private String processInternal(String name) {
+		if (name == null) {
+			throw new IllegalStateException("name must not be null.");
+		}
+
 		User user = new User(name);
 
 		return "Hello, " + user.getName() + ".";

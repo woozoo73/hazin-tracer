@@ -24,8 +24,10 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 
 import com.github.woozoo73.ht.format.DefaultFormat;
+import com.github.woozoo73.ht.format.Format;
 
 /**
  * Invocation aspect.
@@ -37,7 +39,19 @@ public class InvocationAspect {
 
 	private static final Log logger = LogFactory.getLog(InvocationAspect.class);
 
+	private Format format;
+
 	public InvocationAspect() {
+		initFormat();
+	}
+
+	private void initFormat() {
+		try {
+			String invocationformat = System.getProperty("htformat", DefaultFormat.class.getName());
+			this.format = (Format) Class.forName(invocationformat).newInstance();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Pointcut("!within(com.github.woozoo73.ht..*) && execution(* *.*(..))")
@@ -65,11 +79,11 @@ public class InvocationAspect {
 
 		try {
 			returnValue = joinPoint.proceed();
-			invocation.setReturnValue(returnValue);
+			invocation.setReturnValueInfo(new ObjectInfo(returnValue));
 
 			return returnValue;
 		} catch (Throwable t) {
-			invocation.setT(t);
+			invocation.setThrowableInfo(new ObjectInfo(t));
 
 			throw t;
 		} finally {
@@ -80,6 +94,7 @@ public class InvocationAspect {
 	private Invocation beforeProfile(JoinPoint joinPoint) throws Throwable {
 		Invocation invocation = new Invocation();
 		invocation.setJoinPoint(joinPoint);
+		invocation.setJoinPointInfo(new JoinPointInfo(joinPoint));
 
 		Invocation endpointInvocation = Context.getEndpointInvocation();
 		if (endpointInvocation == null) {
@@ -108,9 +123,9 @@ public class InvocationAspect {
 
 		if (invocation.equalsJoinPoint(Context.getEndpointInvocation())) {
 			Invocation i = Context.dump();
-			
+
 			if (logger.isDebugEnabled()) {
-				logger.debug(new DefaultFormat().format(i));
+				logger.debug(format.format(i));
 			}
 		}
 	}

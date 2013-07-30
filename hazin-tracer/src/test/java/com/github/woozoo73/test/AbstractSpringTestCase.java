@@ -15,29 +15,11 @@
  */
 package com.github.woozoo73.test;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.github.woozoo73.test.dummy.Processor;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/test-applicationContext.xml" })
 public class AbstractSpringTestCase {
-
-	@Autowired
-	private Processor processor;
-
-	@Before
-	public void setUp() throws Exception {
-	}
-	
-	@Test
-	public void test() {
-		processor.process("foo");
-	}
-
 }

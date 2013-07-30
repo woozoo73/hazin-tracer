@@ -15,8 +15,17 @@
  */
 package com.github.woozoo73.ht;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import org.aspectj.lang.JoinPoint;
 
@@ -25,16 +34,30 @@ import org.aspectj.lang.JoinPoint;
  * 
  * @author woozoo73
  */
-public class Invocation {
+@XmlRootElement(name = "invocation")
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlType(propOrder = { "depth", "joinPointInfo", "childInvocationList", "durationNanoTime", "durationPercentage",
+		"returnValueInfo", "throwableInfo" })
+public class Invocation implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
+	@XmlAttribute
 	private Integer depth = 0;
 
+	@XmlElementWrapper(name = "childInvocationList")
+	@XmlElement(name = "invocation")
 	private List<Invocation> childInvocationList = new ArrayList<Invocation>();
 
 	private JoinPoint joinPoint;
 
+	@XmlElement(name = "joinPoint")
+	private JoinPointInfo joinPointInfo;
+
+	@XmlAttribute
 	private Long durationNanoTime;
 
+	@XmlAttribute
 	private Double durationPercentage = 100D;
 
 	private Long startNanoTime;
@@ -43,9 +66,15 @@ public class Invocation {
 
 	private Object returnValue;
 
+	@XmlElement(name = "returnValue")
+	private ObjectInfo returnValueInfo;
+
 	private Throwable t;
 
-	public boolean equalsJoinPoint(Invocation another) {
+	@XmlElement(name = "t")
+	private ObjectInfo throwableInfo;
+
+	protected boolean equalsJoinPoint(Invocation another) {
 		if (another == null) {
 			return false;
 		}
@@ -53,7 +82,7 @@ public class Invocation {
 		return equalsJoinPoint(another.joinPoint);
 	}
 
-	public boolean equalsJoinPoint(JoinPoint anotherJoinPoint) {
+	protected boolean equalsJoinPoint(JoinPoint anotherJoinPoint) {
 		if (joinPoint == null) {
 			return false;
 		}
@@ -61,7 +90,7 @@ public class Invocation {
 		return joinPoint.equals(anotherJoinPoint);
 	}
 
-	public Invocation getInvocationByJoinPoint(JoinPoint search) {
+	protected Invocation getInvocationByJoinPoint(JoinPoint search) {
 		if (search == null) {
 			return null;
 		}
@@ -79,22 +108,22 @@ public class Invocation {
 
 		return null;
 	}
-	
-	public void start() {
+
+	protected void start() {
 		startNanoTime = System.nanoTime();
 	}
 
-	public void stop() {
+	protected void stop() {
 		endNanoTime = System.nanoTime();
 		durationNanoTime = endNanoTime - startNanoTime;
 	}
 
-	public void add(Invocation childInvocation) {
+	protected void add(Invocation childInvocation) {
 		childInvocation.setDepth(depth + 1);
 		childInvocationList.add(childInvocation);
 	}
 
-	public void calculateChildDurationPercentage() {
+	protected void calculateChildDurationPercentage() {
 		Long totalSibling = 0L;
 		for (Invocation invocation : childInvocationList) {
 			totalSibling += invocation.durationNanoTime;
@@ -104,7 +133,6 @@ public class Invocation {
 			Double percentage = 0D;
 			if (totalSibling > 0L) {
 				percentage = (100D * invocation.durationNanoTime) / totalSibling;
-
 			}
 			invocation.setDurationPercentage(percentage);
 
@@ -132,12 +160,20 @@ public class Invocation {
 		return childInvocationList;
 	}
 
-	public JoinPoint getJoinPoint() {
+	protected JoinPoint getJoinPoint() {
 		return joinPoint;
 	}
 
-	public void setJoinPoint(JoinPoint joinPoint) {
+	protected void setJoinPoint(JoinPoint joinPoint) {
 		this.joinPoint = joinPoint;
+	}
+
+	public JoinPointInfo getJoinPointInfo() {
+		return joinPointInfo;
+	}
+
+	public void setJoinPointInfo(JoinPointInfo joinPointInfo) {
+		this.joinPointInfo = joinPointInfo;
 	}
 
 	public Long getDurationNanoTime() {
@@ -156,20 +192,36 @@ public class Invocation {
 		this.durationPercentage = durationPercentage;
 	}
 
-	public Object getReturnValue() {
+	protected Object getReturnValue() {
 		return returnValue;
 	}
 
-	public void setReturnValue(Object returnValue) {
+	protected void setReturnValue(Object returnValue) {
 		this.returnValue = returnValue;
 	}
 
-	public Throwable getT() {
+	public ObjectInfo getReturnValueInfo() {
+		return returnValueInfo;
+	}
+
+	public void setReturnValueInfo(ObjectInfo returnValueInfo) {
+		this.returnValueInfo = returnValueInfo;
+	}
+
+	protected Throwable getT() {
 		return t;
 	}
 
-	public void setT(Throwable t) {
+	protected void setT(Throwable t) {
 		this.t = t;
+	}
+
+	public ObjectInfo getThrowableInfo() {
+		return throwableInfo;
+	}
+
+	public void setThrowableInfo(ObjectInfo throwableInfo) {
+		this.throwableInfo = throwableInfo;
 	}
 
 }

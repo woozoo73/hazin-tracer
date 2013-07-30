@@ -18,11 +18,13 @@ package com.github.woozoo73.ht.format;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
-import org.aspectj.lang.reflect.SourceLocation;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.github.woozoo73.ht.Invocation;
+import com.github.woozoo73.ht.JoinPointInfo;
+import com.github.woozoo73.ht.SignatureInfo;
+import com.github.woozoo73.ht.SourceLocationInfo;
 
 /**
  * Default output format.
@@ -31,22 +33,24 @@ import com.github.woozoo73.ht.Invocation;
  */
 public class DefaultFormat implements Format {
 
+	private static final Log logger = LogFactory.getLog(DefaultFormat.class);
+
 	private static NumberFormat timeFormat = new DecimalFormat("###,##0.00");
 
 	@Override
 	public String format(Invocation invocation) {
-		StringBuilder builder = new StringBuilder();
-		builder.append("\n");
-		builder.append("--------------------------------------------------------------------------------------------------------------------------------------------------------");
-		builder.append("\n");
-		builder.append(formatInteranl(invocation));
-		builder.append("\n");
-		builder.append("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+		String output = null;
 
-		return builder.toString();
+		try {
+			output = formatInternal(invocation);
+		} catch (Exception e) {
+			logger.warn(e.getMessage(), e);
+		}
+
+		return output;
 	}
 
-	private String formatInteranl(Invocation invocation) {
+	private String formatInternal(Invocation invocation) {
 		if (invocation == null) {
 			return null;
 		}
@@ -60,14 +64,14 @@ public class DefaultFormat implements Format {
 		if (invocation.getChildInvocationList() != null) {
 			for (Invocation childInvocation : invocation.getChildInvocationList()) {
 				builder.append("\n");
-				builder.append(formatInteranl(childInvocation));
+				builder.append(formatInternal(childInvocation));
 			}
 		}
 		builder.append("\n");
 		for (int i = 0; i < invocation.getDepth(); i++) {
 			builder.append("    ");
 		}
-		if (invocation.getT() == null) {
+		if (invocation.getThrowableInfo() == null) {
 			builder.append("<---- ");
 			builder.append(returnInfo(invocation));
 		} else {
@@ -81,8 +85,8 @@ public class DefaultFormat implements Format {
 	private String callInfo(Invocation invocation) {
 		StringBuilder builder = new StringBuilder();
 
-		JoinPoint joinPoint = invocation.getJoinPoint();
-		Signature signature = joinPoint.getSignature();
+		JoinPointInfo joinPoint = invocation.getJoinPointInfo();
+		SignatureInfo signature = joinPoint.getSignatureInfo();
 		if (signature != null) {
 			builder.append(signature.getDeclaringType().getName());
 			builder.append(".");
@@ -91,7 +95,7 @@ public class DefaultFormat implements Format {
 			builder.append(argsInfo(invocation));
 			builder.append(")");
 
-			SourceLocation sourceLocation = joinPoint.getSourceLocation();
+			SourceLocationInfo sourceLocation = joinPoint.getSourceLocation();
 			if (sourceLocation != null) {
 				builder.append(" (");
 				builder.append(sourceLocation.getFileName());
@@ -110,7 +114,7 @@ public class DefaultFormat implements Format {
 	private String argsInfo(Invocation invocation) {
 		StringBuilder builder = new StringBuilder();
 
-		JoinPoint joinPoint = invocation.getJoinPoint();
+		JoinPointInfo joinPoint = invocation.getJoinPointInfo();
 		Object[] arguments = joinPoint.getArgs();
 		if (arguments != null) {
 			boolean first = true;
@@ -152,7 +156,7 @@ public class DefaultFormat implements Format {
 
 	private String returnInfo(Invocation invocation) {
 		StringBuilder builder = new StringBuilder();
-		builder.append(invocation.getReturnValue());
+		builder.append(invocation.getReturnValueInfo());
 		builder.append(" ");
 		builder.append(durationInfo(invocation));
 
@@ -161,7 +165,7 @@ public class DefaultFormat implements Format {
 
 	private String throwInfo(Invocation invocation) {
 		StringBuilder builder = new StringBuilder();
-		builder.append(invocation.getT());
+		builder.append(invocation.getThrowableInfo());
 		builder.append(" ");
 		builder.append(durationInfo(invocation));
 

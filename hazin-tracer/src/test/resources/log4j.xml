@@ -11,6 +11,19 @@
 		</layout>
 	</appender>
 
+	<appender name="stdout_pretty" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%-5p [%d{yyyy-MM-dd HH:mm:ss.SSS}] %C{1}.%M(%F:%L) - %n----------------------------------------%n%m%n----------------------------------------%n" />
+		</layout>
+	</appender>
+
+	<category name="com.github.woozoo73.ht.InvocationAspect" additivity="false">
+		<level value="TRACE" />
+		<appender-ref ref="stdout_pretty" />
+	</category>
+
 	<root>
 		<level value="TRACE" />
 		<appender-ref ref="stdout" />

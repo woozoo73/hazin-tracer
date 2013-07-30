@@ -15,6 +15,7 @@
  */
 package com.github.woozoo73.ht;
 
+import java.io.Serializable;
 import java.util.Stack;
 
 /**
@@ -22,7 +23,9 @@ import java.util.Stack;
  * 
  * @author woozoo73
  */
-public class Context {
+public class Context implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private static ThreadLocal<Invocation> ENDPOINT_INVOCATION_CONTEXT = new ThreadLocal<Invocation>();
 
