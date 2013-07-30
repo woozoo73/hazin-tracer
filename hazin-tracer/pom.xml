@@ -1,9 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.woozoo73</groupId>
 	<artifactId>hazin-tracer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<properties>
 		<aspectj.version>1.7.1</aspectj.version>
 		<commons-logging.version>1.1.1</commons-logging.version>
@@ -11,6 +13,7 @@
 		<junit.version>4.11</junit.version>
 		<spring.version>3.2.1.RELEASE</spring.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -57,4 +60,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
 </project>
