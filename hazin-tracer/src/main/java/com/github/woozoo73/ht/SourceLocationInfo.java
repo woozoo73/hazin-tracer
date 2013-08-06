@@ -25,6 +25,11 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.aspectj.lang.reflect.SourceLocation;
 
+/**
+ * SourceLocation data.
+ * 
+ * @author woozoo73
+ */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(propOrder = { "withinType", "line" })

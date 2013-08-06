@@ -25,6 +25,11 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.aspectj.lang.Signature;
 
+/**
+ * Signature data.
+ * 
+ * @author woozoo73
+ */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(propOrder = { "declaringType", "name", "modifiers" })

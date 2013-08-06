@@ -27,6 +27,11 @@ import javax.xml.bind.annotation.XmlType;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 
+/**
+ * JoinPoint data.
+ * 
+ * @author woozoo73
+ */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(propOrder = { "signatureInfo", "argsInfo", "sourceLocation" })

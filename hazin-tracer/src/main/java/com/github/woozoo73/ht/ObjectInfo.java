@@ -23,6 +23,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+/**
+ * Object data.
+ * 
+ * @author woozoo73
+ */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(propOrder = { "declaringType", "toStringValue" })
@@ -68,5 +73,5 @@ public class ObjectInfo implements Serializable {
 	public String toString() {
 		return toStringValue;
 	}
-	
+
 }
