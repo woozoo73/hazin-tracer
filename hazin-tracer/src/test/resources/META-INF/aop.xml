@@ -1,15 +1,8 @@
 <!DOCTYPE aspectj PUBLIC
         "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
 <aspectj>
-	<weaver options="-verbose -showWeaveInfo -debug">
-		<!--
-		<include within="com.github.woozoo73.test..*" />
-		-->
-	</weaver>
+	<weaver options="-verbose -showWeaveInfo -debug" />
 	<aspects>
-		<!--
-		<aspect name="com.github.woozoo73.ht.TestAspect" />
-		-->
 		<aspect name="com.github.woozoo73.ht.InvocationAspect" />
 	</aspects>
 </aspectj>
