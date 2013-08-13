@@ -25,6 +25,11 @@ import org.apache.commons.logging.LogFactory;
 
 import com.github.woozoo73.ht.Invocation;
 
+/**
+ * XML format.
+ * 
+ * @author woozoo73
+ */
 public class XmlFormat implements Format {
 
 	private static final Log logger = LogFactory.getLog(XmlFormat.class);
@@ -51,8 +56,8 @@ public class XmlFormat implements Format {
 		marshaller.marshal(invocation, writer);
 
 		String xml = writer.getBuffer().toString();
-		
+
 		return xml;
 	}
-	
+
 }

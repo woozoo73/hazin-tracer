@@ -15,8 +15,6 @@
  */
 package com.github.woozoo73.ht;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -27,6 +25,8 @@ import org.aspectj.lang.annotation.Pointcut;
 
 import com.github.woozoo73.ht.format.DefaultFormat;
 import com.github.woozoo73.ht.format.Format;
+import com.github.woozoo73.ht.writer.LogWriter;
+import com.github.woozoo73.ht.writer.Writer;
 
 /**
  * Invocation aspect.
@@ -36,18 +36,22 @@ import com.github.woozoo73.ht.format.Format;
 @Aspect
 public class InvocationAspect {
 
-	private static final Log logger = LogFactory.getLog(InvocationAspect.class);
-
-	private Format format;
+	private Writer writer;
 
 	public InvocationAspect() {
-		initFormat();
+		initWriter();
 	}
 
-	private void initFormat() {
+	private void initWriter() {
 		try {
-			String invocationformat = System.getProperty("htformat", DefaultFormat.class.getName());
-			this.format = (Format) Class.forName(invocationformat).newInstance();
+			String formatName = System.getProperty("htformat", DefaultFormat.class.getName());
+			Format format = (Format) Class.forName(formatName).newInstance();
+
+			String witerName = System.getProperty("htwriter", LogWriter.class.getName());
+			Writer writer = (Writer) Class.forName(witerName).newInstance();
+			writer.setFormat(format);
+
+			this.writer = writer;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -123,9 +127,7 @@ public class InvocationAspect {
 		if (invocation.equalsJoinPoint(Context.getEndpointInvocation())) {
 			Invocation i = Context.dump();
 
-			if (logger.isDebugEnabled()) {
-				logger.debug(format.format(i));
-			}
+			writer.write(i);
 		}
 	}
 

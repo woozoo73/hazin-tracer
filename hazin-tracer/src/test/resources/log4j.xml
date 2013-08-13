@@ -15,11 +15,11 @@
 		<param name="Target" value="System.out" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"
-				value="%-5p [%d{yyyy-MM-dd HH:mm:ss.SSS}] %C{1}.%M(%F:%L) - %n----------------------------------------%n%m%n----------------------------------------%n" />
+				value="%-5p [%d{yyyy-MM-dd HH:mm:ss.SSS}] %C{1}.%M(%F:%L) - %n----------------------------------------%n%m----------------------------------------%n" />
 		</layout>
 	</appender>
 
-	<category name="com.github.woozoo73.ht.InvocationAspect" additivity="false">
+	<category name="com.github.woozoo73.ht.writer.LogWriter" additivity="false">
 		<level value="TRACE" />
 		<appender-ref ref="stdout_pretty" />
 	</category>
