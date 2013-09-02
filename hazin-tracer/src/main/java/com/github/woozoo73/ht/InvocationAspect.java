@@ -83,7 +83,7 @@ public class InvocationAspect {
 		try {
 			returnValue = joinPoint.proceed();
 			invocation.setReturnValueInfo(new ObjectInfo(returnValue));
-
+			
 			return returnValue;
 		} catch (Throwable t) {
 			invocation.setThrowableInfo(new ObjectInfo(t));

@@ -78,6 +78,10 @@ public class SignatureInfo implements Signature, Serializable {
 		return longString;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String getName() {
 		return name;
@@ -88,9 +92,17 @@ public class SignatureInfo implements Signature, Serializable {
 		return modifiers;
 	}
 
+	public void setDeclaringType(Class<?> declaringType) {
+		this.declaringType = declaringType;
+	}
+
 	@Override
 	public Class<?> getDeclaringType() {
 		return declaringType;
+	}
+
+	public void setDeclaringTypeName(String declaringTypeName) {
+		this.declaringTypeName = declaringTypeName;
 	}
 
 	@Override

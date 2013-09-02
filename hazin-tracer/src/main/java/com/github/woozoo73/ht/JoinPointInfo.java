@@ -60,7 +60,7 @@ public class JoinPointInfo implements Serializable {
 		}
 
 		this.args = joinPoint.getArgs();
-		if (this.args != null) {
+		if (this.args != null && this.args.length > 0) {
 			this.argsInfo = new ObjectInfo[args.length];
 			for (int i = 0; i < argsInfo.length; i++) {
 				this.argsInfo[i] = new ObjectInfo(args[i]);

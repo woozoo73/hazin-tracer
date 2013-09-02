@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+	<xs:element name="invocation">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="joinPoint" minOccurs="0" />
+				<xs:element ref="childInvocationList" minOccurs="0" />
+				<xs:element ref="returnValue" minOccurs="0" />
+				<xs:element ref="t" minOccurs="0" />
+			</xs:sequence>
+			<xs:attribute name="depth" type="xs:integer" use="required" />
+			<xs:attribute name="durationNanoTime" type="xs:long"
+				use="required" />
+			<xs:attribute name="durationPercentage" type="xs:double"
+				use="required" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="childInvocationList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="invocation" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="joinPoint">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="signature" />
+				<xs:element ref="args" minOccurs="0" />
+				<xs:element ref="sourceLocation" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="t">
+		<xs:complexType>
+			<xs:attribute name="declaringType" type="xs:string" />
+			<xs:attribute name="toString" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="signature">
+		<xs:complexType>
+			<xs:attribute name="declaringType" type="xs:string" />
+			<xs:attribute name="name" type="xs:string" />
+			<xs:attribute name="modifiers" type="xs:integer" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sourceLocation">
+		<xs:complexType>
+			<xs:attribute name="withinType" type="xs:string" />
+			<xs:attribute name="line" type="xs:integer" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="args">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="arg" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="arg">
+		<xs:complexType>
+			<xs:attribute name="declaringType" type="xs:string" />
+			<xs:attribute name="toString" type="xs:string" />
+		</xs:complexType>		
+	</xs:element>
+	<xs:element name="returnValue">
+		<xs:complexType>
+			<xs:attribute name="declaringType" type="xs:string" />
+			<xs:attribute name="toString" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

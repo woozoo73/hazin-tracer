@@ -47,7 +47,7 @@ public class Invocation implements Serializable {
 
 	@XmlElementWrapper(name = "childInvocationList")
 	@XmlElement(name = "invocation")
-	private List<Invocation> childInvocationList = new ArrayList<Invocation>();
+	private List<Invocation> childInvocationList;
 
 	private JoinPoint joinPoint;
 
@@ -99,10 +99,12 @@ public class Invocation implements Serializable {
 			return this;
 		}
 
-		for (Invocation childInvocation : childInvocationList) {
-			Invocation match = childInvocation.getInvocationByJoinPoint(search);
-			if (match != null) {
-				return match;
+		if (childInvocationList != null) {
+			for (Invocation childInvocation : childInvocationList) {
+				Invocation match = childInvocation.getInvocationByJoinPoint(search);
+				if (match != null) {
+					return match;
+				}
 			}
 		}
 
@@ -120,23 +122,32 @@ public class Invocation implements Serializable {
 
 	protected void add(Invocation childInvocation) {
 		childInvocation.setDepth(depth + 1);
+
+		if (childInvocationList == null) {
+			childInvocationList = new ArrayList<Invocation>();
+		}
 		childInvocationList.add(childInvocation);
 	}
 
 	protected void calculateChildDurationPercentage() {
 		Long totalSibling = 0L;
-		for (Invocation invocation : childInvocationList) {
-			totalSibling += invocation.durationNanoTime;
+
+		if (childInvocationList != null) {
+			for (Invocation invocation : childInvocationList) {
+				totalSibling += invocation.durationNanoTime;
+			}
 		}
 
-		for (Invocation invocation : childInvocationList) {
-			Double percentage = 0D;
-			if (totalSibling > 0L) {
-				percentage = (100D * invocation.durationNanoTime) / totalSibling;
-			}
-			invocation.setDurationPercentage(percentage);
+		if (childInvocationList != null) {
+			for (Invocation invocation : childInvocationList) {
+				Double percentage = 0D;
+				if (totalSibling > 0L) {
+					percentage = (100D * invocation.durationNanoTime) / totalSibling;
+				}
+				invocation.setDurationPercentage(percentage);
 
-			invocation.calculateChildDurationPercentage();
+				invocation.calculateChildDurationPercentage();
+			}
 		}
 	}
 
