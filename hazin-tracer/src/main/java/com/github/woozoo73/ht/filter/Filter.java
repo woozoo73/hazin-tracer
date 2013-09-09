@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.woozoo73.test.dummy;
+package com.github.woozoo73.ht.filter;
 
-public interface Processor {
+import org.aspectj.lang.JoinPoint;
 
-	String process(String name);
+public interface Filter {
+
+	boolean accept(JoinPoint joinPoint);
 
 }

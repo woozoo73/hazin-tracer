@@ -175,7 +175,7 @@ public class DefaultFormat implements Format {
 	private String durationInfo(Invocation invocation) {
 		StringBuilder builder = new StringBuilder();
 		builder.append("(");
-		builder.append(timeFormat.format(invocation.getDurationMiliTime()));
+		builder.append(invocation.getDurationMiliTime() == null ? "0" : timeFormat.format(invocation.getDurationMiliTime()));
 		builder.append("ms");
 		builder.append(":");
 		builder.append(timeFormat.format(invocation.getDurationPercentage()));

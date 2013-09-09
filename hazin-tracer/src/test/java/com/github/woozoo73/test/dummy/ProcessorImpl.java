@@ -15,8 +15,33 @@
  */
 package com.github.woozoo73.test.dummy;
 
-public interface Processor {
+public class ProcessorImpl implements Processor {
 
-	String process(String name);
+	public ProcessorImpl() {
+	}
+
+	@Override
+	public String process(String name) {
+		Timer timer = new Timer();
+		timer.sleep(10L);
+
+		String result = "";
+		result += processInternal(name) + " ";
+		result += processInternal(name) + " ";
+		result += processInternal(name) + " ";
+		result += processInternal(name);
+
+		return result;
+	}
+
+	private String processInternal(String name) {
+		if (name == null) {
+			throw new IllegalStateException("name must not be null.");
+		}
+
+		User user = new User(name);
+
+		return "Hello, " + user.getName() + ".";
+	}
 
 }

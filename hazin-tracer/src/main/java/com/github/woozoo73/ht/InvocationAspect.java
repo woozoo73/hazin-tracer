@@ -23,6 +23,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 
+import com.github.woozoo73.ht.filter.Filter;
+import com.github.woozoo73.ht.filter.ClassFilter;
 import com.github.woozoo73.ht.format.DefaultFormat;
 import com.github.woozoo73.ht.format.Format;
 import com.github.woozoo73.ht.writer.LogWriter;
@@ -38,16 +40,19 @@ public class InvocationAspect {
 
 	private Writer writer;
 
+	private Filter filter;
+
 	public InvocationAspect() {
 		initWriter();
+		initFilter();
 	}
 
 	private void initWriter() {
 		try {
-			String formatName = System.getProperty("htformat", DefaultFormat.class.getName());
+			String formatName = System.getProperty("ht.format", DefaultFormat.class.getName());
 			Format format = (Format) Class.forName(formatName).newInstance();
 
-			String witerName = System.getProperty("htwriter", LogWriter.class.getName());
+			String witerName = System.getProperty("ht.writer", LogWriter.class.getName());
 			Writer writer = (Writer) Class.forName(witerName).newInstance();
 			writer.setFormat(format);
 
@@ -57,6 +62,15 @@ public class InvocationAspect {
 		}
 	}
 
+	private void initFilter() {
+		try {
+			String filterName = System.getProperty("ht.filter", ClassFilter.class.getName());
+			this.filter = (Filter) Class.forName(filterName).newInstance();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	@Pointcut("!within(com.github.woozoo73.ht..*) && execution(* *.*(..))")
 	public void executionPointcut() {
 	}
@@ -82,11 +96,16 @@ public class InvocationAspect {
 
 		try {
 			returnValue = joinPoint.proceed();
-			invocation.setReturnValueInfo(new ObjectInfo(returnValue));
+			
+			if (invocation != null) {
+				invocation.setReturnValueInfo(new ObjectInfo(returnValue));
+			}
 			
 			return returnValue;
 		} catch (Throwable t) {
-			invocation.setThrowableInfo(new ObjectInfo(t));
+			if (invocation != null) {
+				invocation.setThrowableInfo(new ObjectInfo(t));
+			}
 
 			throw t;
 		} finally {
@@ -95,15 +114,19 @@ public class InvocationAspect {
 	}
 
 	private Invocation beforeProfile(JoinPoint joinPoint) throws Throwable {
+		Invocation endpointInvocation = Context.getEndpointInvocation();
+		if (endpointInvocation == null && !filter.accept(joinPoint)) {
+			return null;
+		}
+
 		Invocation invocation = new Invocation();
 		invocation.setJoinPoint(joinPoint);
 		invocation.setJoinPointInfo(new JoinPointInfo(joinPoint));
 
-		Invocation endpointInvocation = Context.getEndpointInvocation();
 		if (endpointInvocation == null) {
 			Context.setEndpointInvocation(invocation);
 		}
-
+		
 		Invocation currentInvocation = Context.peekFromInvocationStack();
 		if (currentInvocation != null) {
 			currentInvocation.add(invocation);
@@ -118,6 +141,11 @@ public class InvocationAspect {
 
 	private void afterProfile(JoinPoint joinPoint) throws Throwable {
 		Invocation endpointInvocation = Context.getEndpointInvocation();
+
+		if (endpointInvocation == null) {
+			return;
+		}
+
 		Invocation invocation = endpointInvocation.getInvocationByJoinPoint(joinPoint);
 
 		invocation.stop();

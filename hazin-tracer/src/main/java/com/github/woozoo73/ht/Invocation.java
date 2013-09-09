@@ -134,7 +134,9 @@ public class Invocation implements Serializable {
 
 		if (childInvocationList != null) {
 			for (Invocation invocation : childInvocationList) {
-				totalSibling += invocation.durationNanoTime;
+				if (invocation.durationNanoTime != null) {
+					totalSibling += invocation.durationNanoTime;
+				}
 			}
 		}
 

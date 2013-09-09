@@ -6,6 +6,6 @@
 
 	<context:load-time-weaver />
 
-	<bean id="processor" class="com.github.woozoo73.test.dummy.Processor" />
+	<bean id="processor" class="com.github.woozoo73.test.dummy.ProcessorImpl" />
 
 </beans>

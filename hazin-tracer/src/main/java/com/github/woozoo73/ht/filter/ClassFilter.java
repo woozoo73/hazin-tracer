@@ -13,10 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.woozoo73.test.dummy;
+package com.github.woozoo73.ht.filter;
 
-public interface Processor {
+import org.aspectj.lang.JoinPoint;
 
-	String process(String name);
+import com.github.woozoo73.ht.util.AntPathMatcher;
+
+public class ClassFilter implements Filter {
+
+	private String pattern;
+
+	private AntPathMatcher matcher = new AntPathMatcher();
+
+	public ClassFilter() {
+		this.pattern = System.getProperty("ht.classfilter.pattern", "*");
+	}
+
+	@Override
+	public boolean accept(JoinPoint joinPoint) {
+		return matcher.match(pattern, joinPoint.getSignature().getDeclaringType().getName());
+	}
 
 }

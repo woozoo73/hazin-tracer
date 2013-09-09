@@ -1,77 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<invocation durationPercentage="100.0" durationNanoTime="565656" depth="0">
+<invocation durationPercentage="100.0" durationNanoTime="513571" depth="0">
     <joinPoint>
-        <signature modifiers="4" name="runReflectiveCall" declaringType="org.junit.runners.model.FrameworkMethod$1"/>
-        <sourceLocation line="47" withinType="org.junit.runners.model.FrameworkMethod$1"/>
+        <signature modifiers="1" name="process" declaringType="com.github.woozoo73.test.dummy.ProcessorImpl"/>
+        <args>
+            <arg/>
+        </args>
+        <sourceLocation line="24" withinType="com.github.woozoo73.test.dummy.ProcessorImpl"/>
     </joinPoint>
     <childInvocationList>
-        <invocation durationPercentage="100.0" durationNanoTime="470550" depth="1">
+        <invocation durationPercentage="0.6043814318369816" durationNanoTime="2718" depth="1">
             <joinPoint>
-                <signature modifiers="1" name="testProcessWithNull" declaringType="com.github.woozoo73.test.dummy.ProcessorTest"/>
-                <sourceLocation line="39" withinType="com.github.woozoo73.test.dummy.ProcessorTest"/>
+                <signature modifiers="1" name="&lt;init&gt;" declaringType="com.github.woozoo73.test.dummy.Timer"/>
+                <sourceLocation line="18" withinType="com.github.woozoo73.test.dummy.Timer"/>
+            </joinPoint>
+        </invocation>
+        <invocation durationPercentage="78.04614467797454" durationNanoTime="350986" depth="1">
+            <joinPoint>
+                <signature modifiers="1" name="sleep" declaringType="com.github.woozoo73.test.dummy.Timer"/>
+                <args>
+                    <arg toString="10" declaringType="java.lang.Long"/>
+                </args>
+                <sourceLocation line="20" withinType="com.github.woozoo73.test.dummy.Timer"/>
             </joinPoint>
             <childInvocationList>
-                <invocation durationPercentage="100.0" durationNanoTime="450170" depth="2">
+                <invocation durationPercentage="100.0" durationNanoTime="13586" depth="2">
                     <joinPoint>
-                        <signature modifiers="1" name="process" declaringType="com.github.woozoo73.test.dummy.Processor"/>
+                        <signature modifiers="0" name="&lt;init&gt;" declaringType="com.github.woozoo73.test.dummy.Timer$1"/>
                         <args>
-                            <arg/>
+                            <arg toString="com.github.woozoo73.test.dummy.Timer@1ffc401" declaringType="com.github.woozoo73.test.dummy.Timer"/>
+                            <arg toString="10" declaringType="java.lang.Long"/>
                         </args>
-                        <sourceLocation line="23" withinType="com.github.woozoo73.test.dummy.Processor"/>
+                        <sourceLocation line="21" withinType="com.github.woozoo73.test.dummy.Timer$1"/>
                     </joinPoint>
                     <childInvocationList>
-                        <invocation durationPercentage="0.5676791322153522" durationNanoTime="2265" depth="3">
+                        <invocation durationPercentage="100.0" durationNanoTime="2717" depth="3">
                             <joinPoint>
-                                <signature modifiers="1" name="&lt;init&gt;" declaringType="com.github.woozoo73.test.dummy.Timer"/>
-                                <sourceLocation line="18" withinType="com.github.woozoo73.test.dummy.Timer"/>
+                                <signature modifiers="1" name="&lt;init&gt;" declaringType="java.lang.Runnable"/>
+                                <sourceLocation line="21" withinType="com.github.woozoo73.test.dummy.Timer$1"/>
                             </joinPoint>
-                        </invocation>
-                        <invocation durationPercentage="79.00113535826443" durationNanoTime="315209" depth="3">
-                            <joinPoint>
-                                <signature modifiers="1" name="sleep" declaringType="com.github.woozoo73.test.dummy.Timer"/>
-                                <args>
-                                    <arg toString="10" declaringType="java.lang.Long"/>
-                                </args>
-                                <sourceLocation line="20" withinType="com.github.woozoo73.test.dummy.Timer"/>
-                            </joinPoint>
-                            <childInvocationList>
-                                <invocation durationPercentage="100.0" durationNanoTime="10870" depth="4">
-                                    <joinPoint>
-                                        <signature modifiers="0" name="&lt;init&gt;" declaringType="com.github.woozoo73.test.dummy.Timer$1"/>
-                                        <args>
-                                            <arg toString="com.github.woozoo73.test.dummy.Timer@12c3c25" declaringType="com.github.woozoo73.test.dummy.Timer"/>
-                                            <arg toString="10" declaringType="java.lang.Long"/>
-                                        </args>
-                                        <sourceLocation line="21" withinType="com.github.woozoo73.test.dummy.Timer$1"/>
-                                    </joinPoint>
-                                    <childInvocationList>
-                                        <invocation durationPercentage="100.0" durationNanoTime="1812" depth="5">
-                                            <joinPoint>
-                                                <signature modifiers="1" name="&lt;init&gt;" declaringType="java.lang.Runnable"/>
-                                                <sourceLocation line="21" withinType="com.github.woozoo73.test.dummy.Timer$1"/>
-                                            </joinPoint>
-                                        </invocation>
-                                    </childInvocationList>
-                                </invocation>
-                            </childInvocationList>
-                            <returnValue/>
-                        </invocation>
-                        <invocation durationPercentage="20.431185509520216" durationNanoTime="81519" depth="3">
-                            <joinPoint>
-                                <signature modifiers="2" name="processInternal" declaringType="com.github.woozoo73.test.dummy.Processor"/>
-                                <args>
-                                    <arg/>
-                                </args>
-                                <sourceLocation line="36" withinType="com.github.woozoo73.test.dummy.Processor"/>
-                            </joinPoint>
-                            <t toString="java.lang.IllegalStateException: name must not be null." declaringType="java.lang.IllegalStateException"/>
                         </invocation>
                     </childInvocationList>
-                    <t toString="java.lang.IllegalStateException: name must not be null." declaringType="java.lang.IllegalStateException"/>
                 </invocation>
             </childInvocationList>
+            <returnValue/>
+        </invocation>
+        <invocation durationPercentage="21.349473890188474" durationNanoTime="96012" depth="1">
+            <joinPoint>
+                <signature modifiers="2" name="processInternal" declaringType="com.github.woozoo73.test.dummy.ProcessorImpl"/>
+                <args>
+                    <arg/>
+                </args>
+                <sourceLocation line="37" withinType="com.github.woozoo73.test.dummy.ProcessorImpl"/>
+            </joinPoint>
             <t toString="java.lang.IllegalStateException: name must not be null." declaringType="java.lang.IllegalStateException"/>
         </invocation>
     </childInvocationList>
-    <t toString="java.lang.reflect.InvocationTargetException" declaringType="java.lang.reflect.InvocationTargetException"/>
+    <t toString="java.lang.IllegalStateException: name must not be null." declaringType="java.lang.IllegalStateException"/>
 </invocation>
