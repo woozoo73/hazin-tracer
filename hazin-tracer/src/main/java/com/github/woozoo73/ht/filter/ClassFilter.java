@@ -19,6 +19,11 @@ import org.aspectj.lang.JoinPoint;
 
 import com.github.woozoo73.ht.util.AntPathMatcher;
 
+/**
+ * Class filter using Ant style path.
+ * 
+ * @author woozoo73
+ */
 public class ClassFilter implements Filter {
 
 	private String pattern;

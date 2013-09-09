@@ -17,6 +17,11 @@ package com.github.woozoo73.ht.filter;
 
 import org.aspectj.lang.JoinPoint;
 
+/**
+ * Endpoint invocation filter.
+ * 
+ * @author woozoo73
+ */
 public interface Filter {
 
 	boolean accept(JoinPoint joinPoint);
