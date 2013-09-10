@@ -21,7 +21,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 import org.aspectj.lang.reflect.SourceLocation;
 
@@ -32,7 +31,6 @@ import org.aspectj.lang.reflect.SourceLocation;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(propOrder = { "withinType", "line" })
 public class SourceLocationInfo implements SourceLocation, Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -80,6 +78,22 @@ public class SourceLocationInfo implements SourceLocation, Serializable {
 	@Override
 	public int getColumn() {
 		return column;
+	}
+
+	public void setWithinType(Class<?> withinType) {
+		this.withinType = withinType;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public void setLine(int line) {
+		this.line = line;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
 	}
 
 }

@@ -24,20 +24,49 @@ public abstract class AbstractTest {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	protected String xsdPath = "xsd/invocation.xsd";
+
 	protected String declaringTypeName0 = "class0";
 
 	protected String method0 = "method0";
 
-	protected Invocation makeInvocation() {
+	protected Invocation makeDummyInvocation() {
+		return makeDummyInvocation(declaringTypeName0, method0);
+	}
+
+	protected Invocation makeDummyInvocation(String declaringTypeName, String method) {
 		Invocation invocation = new Invocation();
-		JoinPointInfo joinPointInfo = new JoinPointInfo();
-		invocation.setJoinPointInfo(joinPointInfo);
+		invocation.setDepth(0);
+		invocation.setDurationNanoTime(1L);
+		invocation.setDurationPercentage(100.0D);
+
+		JoinPointInfo joinPoint = new JoinPointInfo();
+		invocation.setJoinPointInfo(joinPoint);
+		addArgs(joinPoint);
+		addSourceLocation(joinPoint);
+
 		SignatureInfo signatureInfo = new SignatureInfo();
-		joinPointInfo.setSignatureInfo(signatureInfo);
-		signatureInfo.setDeclaringTypeName(declaringTypeName0);
-		signatureInfo.setName(method0);
+		signatureInfo.setDeclaringTypeName(declaringTypeName);
+		signatureInfo.setName(method);
+		joinPoint.setSignatureInfo(signatureInfo);
 
 		return invocation;
+	}
+
+	protected void addArgs(JoinPointInfo joinPoint) {
+		ObjectInfo arg = new ObjectInfo();
+		arg.setDeclaringType(String.class);
+		arg.setToStringValue(String.class.getName());
+		joinPoint.setArgsInfo(new ObjectInfo[] { arg });
+	}
+
+	protected void addSourceLocation(JoinPointInfo joinPoint) {
+		SourceLocationInfo sourceLocation = new SourceLocationInfo();
+		sourceLocation.setWithinType(String.class);
+		sourceLocation.setFileName("String.java");
+		sourceLocation.setLine(5);
+		sourceLocation.setColumn(20);
+		joinPoint.setSourceLocation(sourceLocation);
 	}
 
 }

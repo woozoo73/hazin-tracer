@@ -52,7 +52,7 @@ public class FileWriterTest extends AbstractTest {
 		directory = new File(tmpdir);
 		fileWriter.setDirectory(directory);
 
-		invocation = makeInvocation();
+		invocation = makeDummyInvocation();
 	}
 
 	@After

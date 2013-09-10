@@ -21,7 +21,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 import org.aspectj.lang.Signature;
 
@@ -32,7 +31,6 @@ import org.aspectj.lang.Signature;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(propOrder = { "declaringType", "name", "modifiers" })
 public class SignatureInfo implements Signature, Serializable {
 
 	private static final long serialVersionUID = 1L;

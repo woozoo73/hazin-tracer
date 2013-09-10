@@ -36,8 +36,7 @@ import org.aspectj.lang.JoinPoint;
  */
 @XmlRootElement(name = "invocation")
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(propOrder = { "depth", "joinPointInfo", "childInvocationList", "durationNanoTime", "durationPercentage",
-		"returnValueInfo", "throwableInfo" })
+@XmlType(propOrder = { "joinPointInfo", "childInvocationList", "returnValueInfo", "throwableInfo" })
 public class Invocation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -120,7 +119,7 @@ public class Invocation implements Serializable {
 		durationNanoTime = endNanoTime - startNanoTime;
 	}
 
-	protected void add(Invocation childInvocation) {
+	public void add(Invocation childInvocation) {
 		childInvocation.setDepth(depth + 1);
 
 		if (childInvocationList == null) {

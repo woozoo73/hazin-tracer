@@ -13,23 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.woozoo73.ht;
+package com.github.woozoo73.ht.format;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class XsdValidationTest extends AbstractTest {
+import com.github.woozoo73.ht.AbstractTest;
+import com.github.woozoo73.ht.Invocation;
+import com.github.woozoo73.ht.XmlUtils;
 
-	protected final Log logger = LogFactory.getLog(getClass());
+public class XmlFormatTest extends AbstractTest {
+
+	private XmlFormat xmlFormat;
 
 	@Before
 	public void setUp() throws Exception {
+		xmlFormat = new XmlFormat();
 	}
 
 	@After
@@ -37,15 +40,17 @@ public class XsdValidationTest extends AbstractTest {
 	}
 
 	@Test
-	public void testValidateXsd() throws Exception {
-		assertThat(validate(xsdPath, "xml/invocation.xml"), is(true));
-	}
+	public void testFormat() {
+		Invocation foo = makeDummyInvocation("foo", "fooMethod");
+		Invocation bar = makeDummyInvocation("bar", "barMethod");
+		foo.add(bar);
 
-	public boolean validate(String xsdPath, String xmlPath) throws Exception {
 		String xsd = XmlUtils.getContent(xsdPath);
-		String xml = XmlUtils.getContent(xmlPath);
+		String xml = xmlFormat.format(foo);
 
-		return XmlUtils.validate(xsd, xml);
+		logger.debug("\n" + xml);
+
+		assertThat(XmlUtils.validate(xsd, xml), is(true));
 	}
 
 }
