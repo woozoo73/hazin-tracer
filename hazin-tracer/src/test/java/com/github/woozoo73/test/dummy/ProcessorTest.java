@@ -15,6 +15,9 @@
  */
 package com.github.woozoo73.test.dummy;
 
+import java.io.PrintWriter;
+
+import org.hsqldb.Server;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,12 +30,31 @@ public class ProcessorTest extends AbstractSpringTestCase {
 	@Autowired
 	private Processor processor;
 
+	private Server server;
+
+	private String databasePath = "/hsqldb/test";
+	
 	@Before
 	public void setUp() throws Exception {
+		startHsqldb();
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		shutdownHsqldb();
+	}
+
+	protected void startHsqldb() {
+		server = new Server();
+		server.setLogWriter(new PrintWriter(System.out));
+		server.setErrWriter(new PrintWriter(System.out));
+		server.setDatabasePath(0, databasePath);
+		server.setDatabaseName(0, "test");
+		server.start();
+	}
+
+	protected void shutdownHsqldb() {
+		server.shutdown();
 	}
 
 	@Test

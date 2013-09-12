@@ -15,36 +15,21 @@
  */
 package com.github.woozoo73.test.dummy;
 
-import org.springframework.util.Assert;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 
-public class User {
+public class DataDao extends AbstractDao {
 
-	private String id;
-	
-	private String name;
-
-	public User(String id, String name) {
-		Assert.notNull(id);
-		Assert.notNull(name);
-
-		setId(id);
-		setName(name);
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public ResultSet selectUser(String id) {
+		return executeQuery("SELECT * FROM USER WHERE ID = ?", new Object[] { id });
 	}
 	
+	@Override
+	protected Connection getConnection() throws Exception {
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?useUnicode=true", "root", "");
+
+		return con;
+	}
+
 }

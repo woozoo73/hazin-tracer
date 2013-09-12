@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	elementFormDefault="qualified">
+
 	<xs:element name="invocation">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="joinPoint" minOccurs="0" />
+				<xs:element ref="jdbc" minOccurs="0" />
 				<xs:element ref="childInvocationList" minOccurs="0" />
 				<xs:element ref="returnValue" minOccurs="0" />
 				<xs:element ref="t" minOccurs="0" />
@@ -16,39 +18,23 @@
 				use="required" />
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="childInvocationList">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="invocation" maxOccurs="unbounded" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+
 	<xs:element name="joinPoint">
 		<xs:complexType>
 			<xs:sequence>
+				<xs:element ref="target" />
 				<xs:element ref="signature" />
 				<xs:element ref="args" minOccurs="0" />
 				<xs:element ref="sourceLocation" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="t">
-		<xs:complexType>
-			<xs:attribute name="declaringType" type="xs:string" />
-			<xs:attribute name="toString" type="xs:string" />
-		</xs:complexType>
-	</xs:element>
+	<xs:element name="target" substitutionGroup="object" />
 	<xs:element name="signature">
 		<xs:complexType>
 			<xs:attribute name="declaringType" type="xs:string" />
 			<xs:attribute name="name" type="xs:string" />
 			<xs:attribute name="modifiers" type="xs:integer" />
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="sourceLocation">
-		<xs:complexType>
-			<xs:attribute name="withinType" type="xs:string" />
-			<xs:attribute name="line" type="xs:integer" />
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="args">
@@ -58,16 +44,64 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="arg">
+	<xs:element name="arg" substitutionGroup="object" />
+	<xs:element name="sourceLocation">
 		<xs:complexType>
-			<xs:attribute name="declaringType" type="xs:string" />
-			<xs:attribute name="toString" type="xs:string" />
-		</xs:complexType>		
+			<xs:attribute name="withinType" type="xs:string" />
+			<xs:attribute name="line" type="xs:integer" />
+		</xs:complexType>
 	</xs:element>
-	<xs:element name="returnValue">
+
+	<xs:element name="jdbc">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="statements" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="statements">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="statement" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="statement">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="sql" type="xs:string" />
+				<xs:element ref="parameters" minOccurs="0" />
+			</xs:sequence>
+			<xs:attribute name="durationNanoTime" type="xs:long"
+				use="required" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="parameters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="parameter" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="parameter" substitutionGroup="object" />
+
+	<xs:element name="childInvocationList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="invocation" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="returnValue" substitutionGroup="object" />
+
+	<xs:element name="t" substitutionGroup="object" />
+
+	<xs:element name="object" abstract="true">
 		<xs:complexType>
 			<xs:attribute name="declaringType" type="xs:string" />
 			<xs:attribute name="toString" type="xs:string" />
 		</xs:complexType>
 	</xs:element>
+
 </xs:schema>

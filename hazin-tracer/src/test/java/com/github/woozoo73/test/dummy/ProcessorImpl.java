@@ -15,7 +15,14 @@
  */
 package com.github.woozoo73.test.dummy;
 
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class ProcessorImpl implements Processor {
+
+	@Autowired
+	private UserDao userDao;
 
 	public ProcessorImpl() {
 	}
@@ -27,8 +34,6 @@ public class ProcessorImpl implements Processor {
 
 		String result = "";
 		result += processInternal(name) + " ";
-		result += processInternal(name) + " ";
-		result += processInternal(name) + " ";
 		result += processInternal(name);
 
 		return result;
@@ -39,7 +44,11 @@ public class ProcessorImpl implements Processor {
 			throw new IllegalStateException("name must not be null.");
 		}
 
-		User user = new User(name);
+		String id = UUID.randomUUID().toString();
+		User user = new User(id, name);
+		userDao.insert(user);
+
+		user = userDao.select(id);
 
 		return "Hello, " + user.getName() + ".";
 	}

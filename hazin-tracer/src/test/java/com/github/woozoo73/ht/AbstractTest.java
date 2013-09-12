@@ -45,6 +45,11 @@ public abstract class AbstractTest {
 		addArgs(joinPoint);
 		addSourceLocation(joinPoint);
 
+		ObjectInfo target = new ObjectInfo();
+		target.setDeclaringType(String.class);
+		target.setToStringValue(String.class.getName());
+		joinPoint.setTarget(target);
+
 		SignatureInfo signatureInfo = new SignatureInfo();
 		signatureInfo.setDeclaringTypeName(declaringTypeName);
 		signatureInfo.setName(method);

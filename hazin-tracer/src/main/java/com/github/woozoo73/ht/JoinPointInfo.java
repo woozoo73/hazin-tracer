@@ -34,11 +34,14 @@ import org.aspectj.lang.Signature;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(propOrder = { "signatureInfo", "argsInfo", "sourceLocation" })
+@XmlType(propOrder = { "target", "signatureInfo", "argsInfo", "sourceLocation" })
 public class JoinPointInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@XmlElement
+	private ObjectInfo target;
+	
 	@XmlElement(name = "signature")
 	private SignatureInfo signatureInfo;
 
@@ -59,22 +62,32 @@ public class JoinPointInfo implements Serializable {
 			return;
 		}
 
-		this.args = joinPoint.getArgs();
-		if (this.args != null && this.args.length > 0) {
-			this.argsInfo = new ObjectInfo[args.length];
+		target = new ObjectInfo(joinPoint.getTarget());
+
+		args = joinPoint.getArgs();
+		if (args != null && args.length > 0) {
+			argsInfo = new ObjectInfo[args.length];
 			for (int i = 0; i < argsInfo.length; i++) {
-				this.argsInfo[i] = new ObjectInfo(args[i]);
+				argsInfo[i] = new ObjectInfo(args[i]);
 			}
 		}
 
-		this.sourceLocation = new SourceLocationInfo(joinPoint.getSourceLocation());
+		sourceLocation = new SourceLocationInfo(joinPoint.getSourceLocation());
 
 		Signature signature = joinPoint.getSignature();
 		if (signature == null) {
 			return;
 		}
 
-		this.signatureInfo = new SignatureInfo(signature);
+		signatureInfo = new SignatureInfo(signature);
+	}
+
+	public ObjectInfo getTarget() {
+		return target;
+	}
+
+	public void setTarget(ObjectInfo target) {
+		this.target = target;
 	}
 
 	public SignatureInfo getSignatureInfo() {

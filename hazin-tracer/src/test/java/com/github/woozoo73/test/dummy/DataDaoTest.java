@@ -15,36 +15,14 @@
  */
 package com.github.woozoo73.test.dummy;
 
-import org.springframework.util.Assert;
+import org.junit.Test;
 
-public class User {
+public class DataDaoTest {
 
-	private String id;
-	
-	private String name;
-
-	public User(String id, String name) {
-		Assert.notNull(id);
-		Assert.notNull(name);
-
-		setId(id);
-		setName(name);
+	@Test
+	public void test() {
+		DataDao dataDao = new DataDao();
+		dataDao.selectUser("00617a85-1f67-4461-b211-8608f2f4e078");
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-	
 }

@@ -71,11 +71,11 @@ public class InvocationAspect {
 		}
 	}
 	
-	@Pointcut("!within(com.github.woozoo73.ht..*) && execution(* *.*(..))")
+	@Pointcut("!within(com.github.woozoo73.ht..*) && execution(* *.*(..)) && !execution(String *.toString()) && !within(java.sql..*+)")
 	public void executionPointcut() {
 	}
 
-	@Pointcut("!within(com.github.woozoo73.ht..*) && initialization(*.new(..))")
+	@Pointcut("!within(com.github.woozoo73.ht..*) && initialization(*.new(..)) && !within(java.sql..*+)")
 	public void initializationPointcut() {
 	}
 
@@ -141,7 +141,6 @@ public class InvocationAspect {
 
 	private void afterProfile(JoinPoint joinPoint) throws Throwable {
 		Invocation endpointInvocation = Context.getEndpointInvocation();
-
 		if (endpointInvocation == null) {
 			return;
 		}

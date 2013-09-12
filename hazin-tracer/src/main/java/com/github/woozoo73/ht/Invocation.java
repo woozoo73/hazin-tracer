@@ -29,6 +29,8 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.aspectj.lang.JoinPoint;
 
+import com.github.woozoo73.ht.jdbc.JdbcInfo;
+
 /**
  * Invocation data.
  * 
@@ -36,7 +38,7 @@ import org.aspectj.lang.JoinPoint;
  */
 @XmlRootElement(name = "invocation")
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(propOrder = { "joinPointInfo", "childInvocationList", "returnValueInfo", "throwableInfo" })
+@XmlType(propOrder = { "joinPointInfo", "jdbcInfo", "childInvocationList", "returnValueInfo", "throwableInfo" })
 public class Invocation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -52,6 +54,9 @@ public class Invocation implements Serializable {
 
 	@XmlElement(name = "joinPoint")
 	private JoinPointInfo joinPointInfo;
+
+	@XmlElement(name="jdbc")
+	private JdbcInfo jdbcInfo;
 
 	@XmlAttribute
 	private Long durationNanoTime;
@@ -186,6 +191,14 @@ public class Invocation implements Serializable {
 
 	public void setJoinPointInfo(JoinPointInfo joinPointInfo) {
 		this.joinPointInfo = joinPointInfo;
+	}
+	
+	public JdbcInfo getJdbcInfo() {
+		return jdbcInfo;
+	}
+
+	public void setJdbcInfo(JdbcInfo jdbcInfo) {
+		this.jdbcInfo = jdbcInfo;
 	}
 
 	public Long getDurationNanoTime() {

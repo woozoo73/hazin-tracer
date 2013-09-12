@@ -15,36 +15,34 @@
  */
 package com.github.woozoo73.test.dummy;
 
-import org.springframework.util.Assert;
+import java.sql.ResultSet;
 
-public class User {
 
-	private String id;
-	
-	private String name;
+public class UserDao extends AbstractDao {
 
-	public User(String id, String name) {
-		Assert.notNull(id);
-		Assert.notNull(name);
-
-		setId(id);
-		setName(name);
+	public void insert(User user) {
+		executeUpdate("INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )", new Object[] { user.getId(), user.getName() } );
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public User select(String id) {
+		ResultSet rs = null;
+		User user = null;
+		
+		try {
+			rs = executeQuery("SELECT * FROM USER WHERE ID = ?", new Object[] { id } );
+			if (rs.next()) {
+				user = new User(rs.getString("ID"), rs.getString("NAME"));
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				rs.close();
+			} catch (Exception e) {
+			}
+		}
+		
+		return user;
 	}
 	
 }

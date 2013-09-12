@@ -17,6 +17,7 @@ package com.github.woozoo73.ht.format;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,6 +26,8 @@ import com.github.woozoo73.ht.Invocation;
 import com.github.woozoo73.ht.JoinPointInfo;
 import com.github.woozoo73.ht.SignatureInfo;
 import com.github.woozoo73.ht.SourceLocationInfo;
+import com.github.woozoo73.ht.jdbc.JdbcInfo;
+import com.github.woozoo73.ht.jdbc.JdbcStatementInfo;
 
 /**
  * Default output format.
@@ -56,11 +59,12 @@ public class DefaultFormat implements Format {
 		}
 
 		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < invocation.getDepth(); i++) {
-			builder.append("    ");
-		}
+		builder.append(indent(invocation));
 		builder.append("----> ");
 		builder.append(callInfo(invocation));
+		if (invocation.getJdbcInfo() != null) {
+			builder.append(jdbcInfo(invocation));
+		}
 		if (invocation.getChildInvocationList() != null) {
 			for (Invocation childInvocation : invocation.getChildInvocationList()) {
 				builder.append("\n");
@@ -68,9 +72,7 @@ public class DefaultFormat implements Format {
 			}
 		}
 		builder.append("\n");
-		for (int i = 0; i < invocation.getDepth(); i++) {
-			builder.append("    ");
-		}
+		builder.append(indent(invocation));
 		if (invocation.getThrowableInfo() == null) {
 			builder.append("<---- ");
 			builder.append(returnInfo(invocation));
@@ -82,13 +84,28 @@ public class DefaultFormat implements Format {
 		return builder.toString();
 	}
 
+	private String indent(Invocation invocation) {
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < invocation.getDepth(); i++) {
+			builder.append("    ");
+		}
+
+		return builder.toString();
+	}
+
 	private String callInfo(Invocation invocation) {
 		StringBuilder builder = new StringBuilder();
 
 		JoinPointInfo joinPoint = invocation.getJoinPointInfo();
 		SignatureInfo signature = joinPoint.getSignatureInfo();
 		if (signature != null) {
-			builder.append(signature.getDeclaringType().getName());
+			String targetName = null;
+			if (joinPoint.getTarget().getDeclaringType() != null) {
+				targetName = joinPoint.getTarget().getDeclaringType().getName();
+			} else {
+				targetName = signature.getDeclaringTypeName();
+			}
+			builder.append(targetName);
 			builder.append(".");
 			builder.append(signature.getName());
 			builder.append("(");
@@ -175,12 +192,50 @@ public class DefaultFormat implements Format {
 	private String durationInfo(Invocation invocation) {
 		StringBuilder builder = new StringBuilder();
 		builder.append("(");
-		builder.append(invocation.getDurationMiliTime() == null ? "0" : timeFormat.format(invocation.getDurationMiliTime()));
+		builder.append(invocation.getDurationMiliTime() == null ? "0" : timeFormat.format(invocation
+				.getDurationMiliTime()));
 		builder.append("ms");
 		builder.append(":");
 		builder.append(timeFormat.format(invocation.getDurationPercentage()));
 		builder.append("%");
 		builder.append(")");
+
+		return builder.toString();
+	}
+
+	private String jdbcInfo(Invocation invocation) {
+		StringBuilder builder = new StringBuilder();
+
+		JdbcInfo jdbcInfo = invocation.getJdbcInfo();
+		List<JdbcStatementInfo> statements = jdbcInfo.getStatements();
+		if (statements != null) {
+			for (JdbcStatementInfo statement : statements) {
+				builder.append("\n");
+				builder.append(indent(invocation));
+				builder.append("       ");
+				builder.append("* [JDBC/Statement] ");
+				builder.append("\n");
+				builder.append(indent(invocation));
+				builder.append("       ");
+				builder.append("       ");
+				builder.append("sql : ");
+				builder.append(statement.getSql());
+				builder.append("\n");
+				builder.append(indent(invocation));
+				builder.append("       ");
+				builder.append("       ");
+				builder.append("parameters : ");
+				builder.append(statement.getParameters());
+				builder.append("\n");
+				builder.append(indent(invocation));
+				builder.append("       ");
+				builder.append("       ");
+				builder.append("duration : ");
+				builder.append(statement.getDurationNanoTime() == null ? "0" : timeFormat.format(statement
+						.getDurationNanoTime() / 1000));
+				builder.append("ms");
+			}
+		}
 
 		return builder.toString();
 	}
