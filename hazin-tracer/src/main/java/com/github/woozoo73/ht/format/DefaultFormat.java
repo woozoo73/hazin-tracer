@@ -59,11 +59,11 @@ public class DefaultFormat implements Format {
 		}
 
 		StringBuilder builder = new StringBuilder();
-		builder.append(indent(invocation));
+		indent(builder, invocation.getDepth());
 		builder.append("----> ");
-		builder.append(callInfo(invocation));
+		callInfo(builder, invocation);
 		if (invocation.getJdbcInfo() != null) {
-			builder.append(jdbcInfo(invocation));
+			jdbcInfo(builder, invocation);
 		}
 		if (invocation.getChildInvocationList() != null) {
 			for (Invocation childInvocation : invocation.getChildInvocationList()) {
@@ -72,30 +72,25 @@ public class DefaultFormat implements Format {
 			}
 		}
 		builder.append("\n");
-		builder.append(indent(invocation));
+		indent(builder, invocation.getDepth());
 		if (invocation.getThrowableInfo() == null) {
 			builder.append("<---- ");
-			builder.append(returnInfo(invocation));
+			returnInfo(builder, invocation);
 		} else {
 			builder.append("<<<<< ");
-			builder.append(throwInfo(invocation));
+			throwInfo(builder, invocation);
 		}
 
 		return builder.toString();
 	}
 
-	private String indent(Invocation invocation) {
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < invocation.getDepth(); i++) {
+	private void indent(StringBuilder builder, int depth) {
+		for (int i = 0; i < depth; i++) {
 			builder.append("    ");
 		}
-
-		return builder.toString();
 	}
 
-	private String callInfo(Invocation invocation) {
-		StringBuilder builder = new StringBuilder();
-
+	private void callInfo(StringBuilder builder, Invocation invocation) {
 		JoinPointInfo joinPoint = invocation.getJoinPointInfo();
 		SignatureInfo signature = joinPoint.getSignatureInfo();
 		if (signature != null) {
@@ -109,7 +104,7 @@ public class DefaultFormat implements Format {
 			builder.append(".");
 			builder.append(signature.getName());
 			builder.append("(");
-			builder.append(argsInfo(invocation));
+			argsInfo(builder, invocation);
 			builder.append(")");
 
 			SourceLocationInfo sourceLocation = joinPoint.getSourceLocation();
@@ -123,14 +118,10 @@ public class DefaultFormat implements Format {
 		}
 
 		builder.append(" ");
-		builder.append(durationInfo(invocation));
-
-		return builder.toString();
+		durationInfo(builder, invocation);
 	}
 
-	private String argsInfo(Invocation invocation) {
-		StringBuilder builder = new StringBuilder();
-
+	private void argsInfo(StringBuilder builder, Invocation invocation) {
 		JoinPointInfo joinPoint = invocation.getJoinPointInfo();
 		Object[] arguments = joinPoint.getArgs();
 		if (arguments != null) {
@@ -139,17 +130,13 @@ public class DefaultFormat implements Format {
 				if (!first) {
 					builder.append(", ");
 				}
-				builder.append(argInfo(arg));
+				argInfo(builder, arg);
 				first = false;
 			}
 		}
-
-		return builder.toString();
 	}
 
-	private String argInfo(Object argument) {
-		StringBuilder builder = new StringBuilder();
-
+	private void argInfo(StringBuilder builder, Object argument) {
 		if (argument != null && argument instanceof Object[]) {
 			Object[] arguments = (Object[]) argument;
 			builder.append("[");
@@ -167,30 +154,21 @@ public class DefaultFormat implements Format {
 		} else {
 			builder.append(argument);
 		}
-
-		return builder.toString();
 	}
 
-	private String returnInfo(Invocation invocation) {
-		StringBuilder builder = new StringBuilder();
+	private void returnInfo(StringBuilder builder, Invocation invocation) {
 		builder.append(invocation.getReturnValueInfo());
 		builder.append(" ");
-		builder.append(durationInfo(invocation));
-
-		return builder.toString();
+		durationInfo(builder, invocation);
 	}
 
-	private String throwInfo(Invocation invocation) {
-		StringBuilder builder = new StringBuilder();
+	private void throwInfo(StringBuilder builder, Invocation invocation) {
 		builder.append(invocation.getThrowableInfo());
 		builder.append(" ");
-		builder.append(durationInfo(invocation));
-
-		return builder.toString();
+		durationInfo(builder, invocation);
 	}
 
-	private String durationInfo(Invocation invocation) {
-		StringBuilder builder = new StringBuilder();
+	private void durationInfo(StringBuilder builder, Invocation invocation) {
 		builder.append("(");
 		builder.append(invocation.getDurationMiliTime() == null ? "0" : timeFormat.format(invocation
 				.getDurationMiliTime()));
@@ -199,45 +177,40 @@ public class DefaultFormat implements Format {
 		builder.append(timeFormat.format(invocation.getDurationPercentage()));
 		builder.append("%");
 		builder.append(")");
-
-		return builder.toString();
 	}
 
-	private String jdbcInfo(Invocation invocation) {
-		StringBuilder builder = new StringBuilder();
-
+	private void jdbcInfo(StringBuilder builder, Invocation invocation) {
 		JdbcInfo jdbcInfo = invocation.getJdbcInfo();
 		List<JdbcStatementInfo> statements = jdbcInfo.getStatements();
 		if (statements != null) {
 			for (JdbcStatementInfo statement : statements) {
 				builder.append("\n");
-				builder.append(indent(invocation));
-				builder.append("       ");
-				builder.append("* [JDBC/Statement] ");
+				indentJdbc(builder, invocation.getDepth(), false);
+				builder.append("[JDBC/Statement]");
 				builder.append("\n");
-				builder.append(indent(invocation));
-				builder.append("       ");
-				builder.append("       ");
-				builder.append("sql : ");
+				indentJdbc(builder, invocation.getDepth(), true);
+				builder.append("sql: ");
 				builder.append(statement.getSql());
 				builder.append("\n");
-				builder.append(indent(invocation));
-				builder.append("       ");
-				builder.append("       ");
-				builder.append("parameters : ");
+				indentJdbc(builder, invocation.getDepth(), true);
+				builder.append("parameters: ");
 				builder.append(statement.getParameters());
 				builder.append("\n");
-				builder.append(indent(invocation));
-				builder.append("       ");
-				builder.append("       ");
-				builder.append("duration : ");
-				builder.append(statement.getDurationNanoTime() == null ? "0" : timeFormat.format(statement
-						.getDurationNanoTime() / 1000));
+				indentJdbc(builder, invocation.getDepth(), true);
+				builder.append("duration: ");
+				builder.append(statement.getDurationMiliTime() == null ? "0" : timeFormat.format(statement
+						.getDurationMiliTime() / 1000));
 				builder.append("ms");
 			}
 		}
+	}
 
-		return builder.toString();
+	private void indentJdbc(StringBuilder builder, int depth, boolean sub) {
+		indent(builder, depth);
+		builder.append("       ");
+		if (sub) {
+			builder.append("    |    ");
+		}
 	}
 
 }

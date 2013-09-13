@@ -48,7 +48,6 @@ public class JdbcAspect {
 		Object returnValue = null;
 
 		JdbcStatementInfo statementInfo = null;
-		Long start = System.nanoTime();
 		
 		try {
 			returnValue = joinPoint.proceed();
@@ -62,21 +61,20 @@ public class JdbcAspect {
 			return returnValue;
 		} catch (Throwable t) {
 			throw t;
-		} finally {
-			Long end = System.nanoTime();
-			statementInfo.setDurationNanoTime(end - start);
 		}
 	}
 
 	@Around("executePointcut()")
 	public Object profileExecute(ProceedingJoinPoint joinPoint) throws Throwable {
 		Object returnValue = null;
+		JdbcStatementInfo statementInfo = null;
+		Long start = System.nanoTime();
 
 		try {
 			returnValue = joinPoint.proceed();
 
 			Statement statement = (Statement) joinPoint.getTarget();
-			JdbcStatementInfo statementInfo = JdbcContext.get(statement);
+			statementInfo = JdbcContext.get(statement);
 			
 			if (statementInfo != null) {
 				Invocation invocation = Context.peekFromInvocationStack();
@@ -96,6 +94,9 @@ public class JdbcAspect {
 			return returnValue;
 		} catch (Throwable t) {
 			throw t;
+		} finally {
+			Long end = System.nanoTime();
+			statementInfo.setDurationNanoTime(end - start);
 		}
 	}
 

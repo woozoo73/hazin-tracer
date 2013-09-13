@@ -69,6 +69,14 @@ public class JdbcStatementInfo implements Serializable {
 		parameters.addAll(params);
 	}
 
+	public Double getDurationMiliTime() {
+		if (durationNanoTime == null) {
+			return null;
+		}
+
+		return durationNanoTime.doubleValue() / (1000 * 1000);
+	}
+
 	public Long getDurationNanoTime() {
 		return durationNanoTime;
 	}
