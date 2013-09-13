@@ -48,7 +48,14 @@ public class ObjectInfo implements Serializable {
 		}
 
 		this.declaringType = object.getClass();
-		this.toStringValue = object.toString();
+		if (object instanceof byte[]) {
+			this.toStringValue = new String((byte[]) object);
+		} else {
+			try {
+				this.toStringValue = object.toString();
+			} catch (Throwable t) {
+			}
+		}
 	}
 
 	public Class<?> getDeclaringType() {

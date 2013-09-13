@@ -70,12 +70,12 @@ public class InvocationAspect {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	@Pointcut("!within(com.github.woozoo73.ht..*) && execution(* *.*(..)) && !execution(String *.toString()) && !within(java.sql..*+)")
+
+	@Pointcut("!within(com.github.woozoo73.ht..*) && execution(* *.*(..)) && !cflow(call(String *.toString())) && !within(java.sql..*+) && !cflow(call(* java.sql..*+.*(..)))")
 	public void executionPointcut() {
 	}
 
-	@Pointcut("!within(com.github.woozoo73.ht..*) && initialization(*.new(..)) && !within(java.sql..*+)")
+	@Pointcut("!within(com.github.woozoo73.ht..*) && initialization(*.new(..)) && !cflow(call(String *.toString())) && !within(java.sql..*+) && !cflow(call(* java.sql..*+.*(..)))")
 	public void initializationPointcut() {
 	}
 
@@ -96,11 +96,11 @@ public class InvocationAspect {
 
 		try {
 			returnValue = joinPoint.proceed();
-			
+
 			if (invocation != null) {
 				invocation.setReturnValueInfo(new ObjectInfo(returnValue));
 			}
-			
+
 			return returnValue;
 		} catch (Throwable t) {
 			if (invocation != null) {
@@ -126,7 +126,7 @@ public class InvocationAspect {
 		if (endpointInvocation == null) {
 			Context.setEndpointInvocation(invocation);
 		}
-		
+
 		Invocation currentInvocation = Context.peekFromInvocationStack();
 		if (currentInvocation != null) {
 			currentInvocation.add(invocation);
@@ -146,6 +146,9 @@ public class InvocationAspect {
 		}
 
 		Invocation invocation = endpointInvocation.getInvocationByJoinPoint(joinPoint);
+		if (invocation == null) {
+			return;
+		}
 
 		invocation.stop();
 

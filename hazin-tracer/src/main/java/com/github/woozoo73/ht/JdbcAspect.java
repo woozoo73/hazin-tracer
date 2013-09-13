@@ -42,13 +42,13 @@ public class JdbcAspect {
 	@Pointcut("within(java.sql.PreparedStatement+) && (execution(void java.sql.PreparedStatement+.set*(int, *)))")
 	public void setParameterPointcut() {
 	}
-	
+
 	@Around("prepareStatementPointcut()")
 	public Object profilePrepareStatement(ProceedingJoinPoint joinPoint) throws Throwable {
 		Object returnValue = null;
 
 		JdbcStatementInfo statementInfo = null;
-		
+
 		try {
 			returnValue = joinPoint.proceed();
 
@@ -75,7 +75,7 @@ public class JdbcAspect {
 
 			Statement statement = (Statement) joinPoint.getTarget();
 			statementInfo = JdbcContext.get(statement);
-			
+
 			if (statementInfo != null) {
 				Invocation invocation = Context.peekFromInvocationStack();
 
@@ -112,7 +112,7 @@ public class JdbcAspect {
 
 		Integer index = (Integer) args[0];
 		Object value = args[1];
-		
+
 		if (statementInfo != null) {
 			statementInfo.setParameter(index, value);
 		}
