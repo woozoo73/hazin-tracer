@@ -16,6 +16,7 @@
 package com.github.woozoo73.ht.writer;
 
 import java.io.File;
+import java.io.IOException;
 
 import com.github.woozoo73.ht.Invocation;
 import com.github.woozoo73.ht.JoinPointInfo;
@@ -39,13 +40,20 @@ public class FileWriter implements Writer {
 
 	@Override
 	public void write(Invocation invocation) {
+		java.io.FileWriter writer = null;
 		try {
 			File outputFile = getOutputFile(invocation);
-			java.io.FileWriter writer = new java.io.FileWriter(outputFile);
+			writer = new java.io.FileWriter(outputFile);
 			writer.write(format.format(invocation));
 			writer.flush();
 		} catch (Exception e) {
-			e.printStackTrace();
+		} finally {
+			if (writer != null) {
+				try {
+					writer.close();
+				} catch (IOException e) {
+				}
+			}
 		}
 	}
 
@@ -53,7 +61,8 @@ public class FileWriter implements Writer {
 		JoinPointInfo joinPointInfo = invocation.getJoinPointInfo();
 		SignatureInfo signatureInfo = joinPointInfo.getSignatureInfo();
 
-		return new File(directory, signatureInfo.getDeclaringTypeName() + "." + signatureInfo.getName());
+		return new File(directory, signatureInfo.getDeclaringTypeName() + "."
+				+ signatureInfo.getName());
 	}
 
 }
