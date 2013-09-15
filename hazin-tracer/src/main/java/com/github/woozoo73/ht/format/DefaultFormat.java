@@ -192,15 +192,23 @@ public class DefaultFormat implements Format {
 				builder.append("sql: ");
 				builder.append(statement.getSql());
 				builder.append("\n");
-				indentJdbc(builder, invocation.getDepth(), true);
-				builder.append("parameters: ");
-				builder.append(statement.getParameters());
-				builder.append("\n");
+				if (statement.getParameters() != null) {
+					indentJdbc(builder, invocation.getDepth(), true);
+					builder.append("parameters: ");
+					builder.append(statement.getParameters());
+					builder.append("\n");
+				}
 				indentJdbc(builder, invocation.getDepth(), true);
 				builder.append("duration: ");
 				builder.append(statement.getDurationMiliTime() == null ? "0" : timeFormat.format(statement
 						.getDurationMiliTime() / 1000));
 				builder.append("ms");
+				if (statement.getThrowableInfo() != null) {
+					builder.append("\n");
+					indentJdbc(builder, invocation.getDepth(), true);
+					builder.append("throw: ");
+					builder.append(statement.getThrowableInfo());
+				}
 			}
 		}
 	}
@@ -209,7 +217,7 @@ public class DefaultFormat implements Format {
 		indent(builder, depth);
 		builder.append("       ");
 		if (sub) {
-			builder.append("    |    ");
+			builder.append("    |");
 		}
 	}
 

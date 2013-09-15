@@ -18,8 +18,9 @@ package com.github.woozoo73.ht;
 import java.sql.Statement;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -31,77 +32,83 @@ import com.github.woozoo73.ht.jdbc.JdbcStatementInfo;
 @Aspect
 public class JdbcAspect {
 
-	@Pointcut("within(java.sql.Connection+) && (execution(java.sql.PreparedStatement+ prepareStatement(String)))")
+	@Pointcut("within(java.sql.Connection+) && execution(java.sql.PreparedStatement+ prepareStatement(String))")
 	public void prepareStatementPointcut() {
 	}
 
-	@Pointcut("within(java.sql.Statement+) && (execution(java.sql.ResultSet executeQuery()) || execution(int executeUpdate()))")
+	@Pointcut("within(java.sql.Statement+) && (execution(java.sql.ResultSet+ executeQuery()) || execution(int executeUpdate()))")
 	public void executePointcut() {
 	}
 
-	@Pointcut("within(java.sql.PreparedStatement+) && (execution(void java.sql.PreparedStatement+.set*(int, *)))")
+	@Pointcut("within(java.sql.PreparedStatement+) && execution(void java.sql.PreparedStatement+.set*(int, *))")
 	public void setParameterPointcut() {
 	}
 
-	@Around("prepareStatementPointcut()")
-	public Object profilePrepareStatement(ProceedingJoinPoint joinPoint) throws Throwable {
-		Object returnValue = null;
+	@AfterReturning(pointcut = "prepareStatementPointcut()", returning = "r")
+	public void profilePrepareStatement(JoinPoint joinPoint, Object r) throws Throwable {
+		if (r == null) {
+			return;
+		}
 
-		JdbcStatementInfo statementInfo = null;
+		Statement statement = (Statement) r;
+		JdbcStatementInfo statementInfo = new JdbcStatementInfo();
+		statementInfo.setSql((String) joinPoint.getArgs()[0]);
 
-		try {
-			returnValue = joinPoint.proceed();
+		JdbcContext.put(statement, statementInfo);
+	}
 
-			Statement statement = (Statement) returnValue;
-			statementInfo = new JdbcStatementInfo();
-			statementInfo.setSql((String) joinPoint.getArgs()[0]);
+	@Before("executePointcut()")
+	public void prfileBeforeExecute(JoinPoint joinPoint) {
+		Statement statement = (Statement) joinPoint.getTarget();
+		JdbcStatementInfo statementInfo = JdbcContext.get(statement);
 
-			JdbcContext.put(statement, statementInfo);
+		if (statementInfo == null) {
+			return;
+		}
 
-			return returnValue;
-		} catch (Throwable t) {
-			throw t;
+		statementInfo.setStart(System.nanoTime());
+	}
+
+	@After("executePointcut()")
+	public void prfileAfterExecute(JoinPoint joinPoint) {
+		Statement statement = (Statement) joinPoint.getTarget();
+		JdbcStatementInfo statementInfo = JdbcContext.get(statement);
+
+		if (statementInfo == null) {
+			return;
+		}
+
+		statementInfo.setEnd(System.nanoTime());
+		statementInfo.calculateDuration();
+
+		Invocation invocation = Context.peekFromInvocationStack();
+
+		if (invocation != null) {
+			JdbcInfo jdbcInfo = invocation.getJdbcInfo();
+			if (jdbcInfo == null) {
+				jdbcInfo = new JdbcInfo();
+				invocation.setJdbcInfo(jdbcInfo);
+			}
+
+			jdbcInfo.add(statementInfo);
+			jdbcInfo.fixData();
 		}
 	}
 
-	@Around("executePointcut()")
-	public Object profileExecute(ProceedingJoinPoint joinPoint) throws Throwable {
-		Object returnValue = null;
-		JdbcStatementInfo statementInfo = null;
-		Long start = System.nanoTime();
+	@AfterThrowing(pointcut = "executePointcut()", throwing = "t")
+	public void prfileAfterThrowingExecute(JoinPoint joinPoint, Throwable t) {
+		Statement statement = (Statement) joinPoint.getTarget();
+		JdbcStatementInfo statementInfo = JdbcContext.get(statement);
 
-		try {
-			returnValue = joinPoint.proceed();
-
-			Statement statement = (Statement) joinPoint.getTarget();
-			statementInfo = JdbcContext.get(statement);
-
-			if (statementInfo != null) {
-				Invocation invocation = Context.peekFromInvocationStack();
-
-				if (invocation != null) {
-					JdbcInfo jdbcInfo = invocation.getJdbcInfo();
-					if (jdbcInfo == null) {
-						jdbcInfo = new JdbcInfo();
-						invocation.setJdbcInfo(jdbcInfo);
-					}
-
-					jdbcInfo.add(statementInfo);
-					jdbcInfo.fixData();
-				}
-			}
-
-			return returnValue;
-		} catch (Throwable t) {
-			throw t;
-		} finally {
-			Long end = System.nanoTime();
-			statementInfo.setDurationNanoTime(end - start);
+		if (statementInfo == null) {
+			return;
 		}
+
+		statementInfo.setThrowableInfo(new ObjectInfo(t));
 	}
 
 	@Before("setParameterPointcut()")
-	public void profileSetParameter(JoinPoint joinPoint) throws Throwable {
+	public void profileSetParameter(JoinPoint joinPoint) {
 		Statement statement = (Statement) joinPoint.getTarget();
 		JdbcStatementInfo statementInfo = JdbcContext.get(statement);
 

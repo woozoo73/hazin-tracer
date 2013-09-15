@@ -17,19 +17,22 @@ package com.github.woozoo73.test.dummy;
 
 import java.sql.ResultSet;
 
-
 public class UserDao extends AbstractDao {
 
 	public void insert(User user) {
-		executeUpdate("INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )", new Object[] { user.getId(), user.getName() } );
+		executeUpdate("INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )", new Object[] { user.getId(), user.getName() });
+	}
+
+	public void insertInvali() {
+		executeUpdate("INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )", null);
 	}
 
 	public User select(String id) {
 		ResultSet rs = null;
 		User user = null;
-		
+
 		try {
-			rs = executeQuery("SELECT * FROM USER WHERE ID = ?", new Object[] { id } );
+			rs = executeQuery("SELECT * FROM USER WHERE ID = ?", new Object[] { id });
 			if (rs.next()) {
 				user = new User(rs.getString("ID"), rs.getString("NAME"));
 			}
@@ -41,8 +44,8 @@ public class UserDao extends AbstractDao {
 			} catch (Exception e) {
 			}
 		}
-		
+
 		return user;
 	}
-	
+
 }

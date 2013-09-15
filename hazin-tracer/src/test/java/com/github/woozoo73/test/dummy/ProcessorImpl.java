@@ -48,6 +48,11 @@ public class ProcessorImpl implements Processor {
 		User user = new User(id, name);
 		userDao.insert(user);
 
+		try {
+			userDao.insertInvali();
+		} catch (Exception e) {
+		}
+		
 		user = userDao.select(id);
 
 		return "Hello, " + user.getName() + ".";
