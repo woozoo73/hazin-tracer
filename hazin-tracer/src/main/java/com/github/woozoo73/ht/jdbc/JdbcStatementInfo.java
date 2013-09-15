@@ -34,7 +34,7 @@ import com.github.woozoo73.ht.ObjectInfo;
 
 @XmlRootElement(name = "statement")
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(propOrder = { "sql", "parameters" })
+@XmlType(propOrder = { "sql", "parameters", "throwableInfo" })
 public class JdbcStatementInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;

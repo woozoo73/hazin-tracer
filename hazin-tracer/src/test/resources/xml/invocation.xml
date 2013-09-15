@@ -1,302 +1,320 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<invocation durationPercentage="100.0" durationNanoTime="332610677" depth="0">
+<invocation depth="0" durationNanoTime="1010360679" durationPercentage="100.0">
     <joinPoint>
-        <target toString="com.github.woozoo73.test.dummy.ProcessorImpl@1e21f52" declaringType="com.github.woozoo73.test.dummy.ProcessorImpl"/>
-        <signature modifiers="1" name="process" declaringType="com.github.woozoo73.test.dummy.ProcessorImpl"/>
-        <args>
-            <arg toString="foo" declaringType="java.lang.String"/>
-        </args>
-        <sourceLocation line="32" withinType="com.github.woozoo73.test.dummy.ProcessorImpl"/>
+        <target declaringType="com.github.woozoo73.test.dummy.ProcessorTest" toString="com.github.woozoo73.test.dummy.ProcessorTest@6834dd3c"/>
+        <signature declaringType="com.github.woozoo73.test.dummy.ProcessorTest" name="testProcess" modifiers="1"/>
+        <sourceLocation withinType="com.github.woozoo73.test.dummy.ProcessorTest" line="62"/>
     </joinPoint>
     <childInvocationList>
-        <invocation durationPercentage="0.0024151798725992775" durationNanoTime="7699" depth="1">
+        <invocation depth="1" durationNanoTime="1010244786" durationPercentage="100.0">
             <joinPoint>
-                <target toString="com.github.woozoo73.test.dummy.Timer@5bcd91" declaringType="com.github.woozoo73.test.dummy.Timer"/>
-                <signature modifiers="1" name="&lt;init&gt;" declaringType="com.github.woozoo73.test.dummy.Timer"/>
-                <sourceLocation line="18" withinType="com.github.woozoo73.test.dummy.Timer"/>
-            </joinPoint>
-        </invocation>
-        <invocation durationPercentage="3.417657074190621" durationNanoTime="10894651" depth="1">
-            <joinPoint>
-                <target toString="com.github.woozoo73.test.dummy.Timer@5bcd91" declaringType="com.github.woozoo73.test.dummy.Timer"/>
-                <signature modifiers="1" name="sleep" declaringType="com.github.woozoo73.test.dummy.Timer"/>
+                <target declaringType="com.github.woozoo73.test.dummy.ProcessorImpl" toString="com.github.woozoo73.test.dummy.ProcessorImpl@4ff28fab"/>
+                <signature declaringType="com.github.woozoo73.test.dummy.ProcessorImpl" name="process" modifiers="1"/>
                 <args>
-                    <arg toString="10" declaringType="java.lang.Long"/>
+                    <arg declaringType="java.lang.String" toString="foo"/>
                 </args>
-                <sourceLocation line="21" withinType="com.github.woozoo73.test.dummy.Timer"/>
+                <sourceLocation withinType="com.github.woozoo73.test.dummy.ProcessorImpl" line="32"/>
             </joinPoint>
             <childInvocationList>
-                <invocation durationPercentage="100.0" durationNanoTime="36231" depth="2">
+                <invocation depth="2" durationNanoTime="15803" durationPercentage="0.0015901095095932224">
                     <joinPoint>
-                        <target toString="com.github.woozoo73.test.dummy.Timer$1@11fcdde" declaringType="com.github.woozoo73.test.dummy.Timer$1"/>
-                        <signature modifiers="0" name="&lt;init&gt;" declaringType="com.github.woozoo73.test.dummy.Timer$1"/>
+                        <target declaringType="com.github.woozoo73.test.dummy.Timer" toString="com.github.woozoo73.test.dummy.Timer@50df92ed"/>
+                        <signature declaringType="com.github.woozoo73.test.dummy.Timer" name="&lt;init&gt;" modifiers="1"/>
+                        <sourceLocation withinType="com.github.woozoo73.test.dummy.Timer" line="18"/>
+                    </joinPoint>
+                </invocation>
+                <invocation depth="2" durationNanoTime="15791444" durationPercentage="1.5889467363544159">
+                    <joinPoint>
+                        <target declaringType="com.github.woozoo73.test.dummy.Timer" toString="com.github.woozoo73.test.dummy.Timer@50df92ed"/>
+                        <signature declaringType="com.github.woozoo73.test.dummy.Timer" name="sleep" modifiers="1"/>
                         <args>
-                            <arg toString="com.github.woozoo73.test.dummy.Timer@5bcd91" declaringType="com.github.woozoo73.test.dummy.Timer"/>
-                            <arg toString="10" declaringType="java.lang.Long"/>
+                            <arg declaringType="java.lang.Long" toString="10"/>
                         </args>
-                        <sourceLocation line="21" withinType="com.github.woozoo73.test.dummy.Timer$1"/>
+                        <sourceLocation withinType="com.github.woozoo73.test.dummy.Timer" line="21"/>
                     </joinPoint>
                     <childInvocationList>
-                        <invocation durationPercentage="100.0" durationNanoTime="7699" depth="3">
+                        <invocation depth="3" durationNanoTime="67266" durationPercentage="100.0">
                             <joinPoint>
-                                <target toString="com.github.woozoo73.test.dummy.Timer$1@11fcdde" declaringType="com.github.woozoo73.test.dummy.Timer$1"/>
-                                <signature modifiers="1" name="&lt;init&gt;" declaringType="java.lang.Runnable"/>
-                                <sourceLocation line="21" withinType="com.github.woozoo73.test.dummy.Timer$1"/>
+                                <target declaringType="com.github.woozoo73.test.dummy.Timer$1" toString="com.github.woozoo73.test.dummy.Timer$1@1afa463f"/>
+                                <signature declaringType="com.github.woozoo73.test.dummy.Timer$1" name="&lt;init&gt;" modifiers="0"/>
+                                <args>
+                                    <arg declaringType="com.github.woozoo73.test.dummy.Timer" toString="com.github.woozoo73.test.dummy.Timer@50df92ed"/>
+                                    <arg declaringType="java.lang.Long" toString="10"/>
+                                </args>
+                                <sourceLocation withinType="com.github.woozoo73.test.dummy.Timer$1" line="21"/>
                             </joinPoint>
+                            <childInvocationList>
+                                <invocation depth="4" durationNanoTime="12562" durationPercentage="100.0">
+                                    <joinPoint>
+                                        <target declaringType="com.github.woozoo73.test.dummy.Timer$1" toString="com.github.woozoo73.test.dummy.Timer$1@1afa463f"/>
+                                        <signature declaringType="java.lang.Runnable" name="&lt;init&gt;" modifiers="1"/>
+                                        <sourceLocation withinType="com.github.woozoo73.test.dummy.Timer$1" line="21"/>
+                                    </joinPoint>
+                                </invocation>
+                            </childInvocationList>
                         </invocation>
                     </childInvocationList>
+                    <returnValue/>
+                </invocation>
+                <invocation depth="2" durationNanoTime="933375666" durationPercentage="93.91694757511279">
+                    <joinPoint>
+                        <target declaringType="com.github.woozoo73.test.dummy.ProcessorImpl" toString="com.github.woozoo73.test.dummy.ProcessorImpl@4ff28fab"/>
+                        <signature declaringType="com.github.woozoo73.test.dummy.ProcessorImpl" name="processInternal" modifiers="2"/>
+                        <args>
+                            <arg declaringType="java.lang.String" toString="foo"/>
+                        </args>
+                        <sourceLocation withinType="com.github.woozoo73.test.dummy.ProcessorImpl" line="43"/>
+                    </joinPoint>
+                    <jdbc>
+                        <statements>
+                            <statement durationNanoTime="80163158">
+                                <sql>INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )</sql>
+                                <parameters>
+                                    <parameter declaringType="java.lang.String" toString="154a20e6-d30f-4264-a0f3-06b68f5bf3eb"/>
+                                    <parameter declaringType="java.lang.String" toString="foo"/>
+                                </parameters>
+                            </statement>
+                            <statement durationNanoTime="3250679">
+                                <sql>INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )</sql>
+                                <t declaringType="java.sql.SQLException" toString="java.sql.SQLException: Parameter not set"/>
+                            </statement>
+                            <statement durationNanoTime="264177856">
+                                <sql>SELECT * FROM USER WHERE ID = ?</sql>
+                                <parameters>
+                                    <parameter declaringType="java.lang.String" toString="154a20e6-d30f-4264-a0f3-06b68f5bf3eb"/>
+                                </parameters>
+                            </statement>
+                        </statements>
+                    </jdbc>
+                    <childInvocationList>
+                        <invocation depth="3" durationNanoTime="216388" durationPercentage="59.93247528756166">
+                            <joinPoint>
+                                <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@149f68fe"/>
+                                <signature declaringType="com.github.woozoo73.test.dummy.User" name="&lt;init&gt;" modifiers="1"/>
+                                <args>
+                                    <arg declaringType="java.lang.String" toString="154a20e6-d30f-4264-a0f3-06b68f5bf3eb"/>
+                                    <arg declaringType="java.lang.String" toString="foo"/>
+                                </args>
+                                <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="27"/>
+                            </joinPoint>
+                            <childInvocationList>
+                                <invocation depth="4" durationNanoTime="32823" durationPercentage="70.43411085599021">
+                                    <joinPoint>
+                                        <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@149f68fe"/>
+                                        <signature declaringType="com.github.woozoo73.test.dummy.User" name="setId" modifiers="1"/>
+                                        <args>
+                                            <arg declaringType="java.lang.String" toString="154a20e6-d30f-4264-a0f3-06b68f5bf3eb"/>
+                                        </args>
+                                        <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="39"/>
+                                    </joinPoint>
+                                    <returnValue/>
+                                </invocation>
+                                <invocation depth="4" durationNanoTime="13778" durationPercentage="29.565889144009784">
+                                    <joinPoint>
+                                        <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@149f68fe"/>
+                                        <signature declaringType="com.github.woozoo73.test.dummy.User" name="setName" modifiers="1"/>
+                                        <args>
+                                            <arg declaringType="java.lang.String" toString="foo"/>
+                                        </args>
+                                        <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="47"/>
+                                    </joinPoint>
+                                    <returnValue/>
+                                </invocation>
+                            </childInvocationList>
+                        </invocation>
+                        <invocation depth="3" durationNanoTime="15399" durationPercentage="4.2650248024528254">
+                            <joinPoint>
+                                <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@149f68fe"/>
+                                <signature declaringType="com.github.woozoo73.test.dummy.User" name="getId" modifiers="1"/>
+                                <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="35"/>
+                            </joinPoint>
+                            <returnValue declaringType="java.lang.String" toString="154a20e6-d30f-4264-a0f3-06b68f5bf3eb"/>
+                        </invocation>
+                        <invocation depth="3" durationNanoTime="15804" durationPercentage="4.377196699653513">
+                            <joinPoint>
+                                <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@149f68fe"/>
+                                <signature declaringType="com.github.woozoo73.test.dummy.User" name="getName" modifiers="1"/>
+                                <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="43"/>
+                            </joinPoint>
+                            <returnValue declaringType="java.lang.String" toString="foo"/>
+                        </invocation>
+                        <invocation depth="3" durationNanoTime="101711" durationPercentage="28.170656385627595">
+                            <joinPoint>
+                                <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@65c90ca"/>
+                                <signature declaringType="com.github.woozoo73.test.dummy.User" name="&lt;init&gt;" modifiers="1"/>
+                                <args>
+                                    <arg declaringType="java.lang.String" toString="154a20e6-d30f-4264-a0f3-06b68f5bf3eb"/>
+                                    <arg declaringType="java.lang.String" toString="foo"/>
+                                </args>
+                                <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="27"/>
+                            </joinPoint>
+                            <childInvocationList>
+                                <invocation depth="4" durationNanoTime="15803" durationPercentage="64.99814913832107">
+                                    <joinPoint>
+                                        <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@65c90ca"/>
+                                        <signature declaringType="com.github.woozoo73.test.dummy.User" name="setId" modifiers="1"/>
+                                        <args>
+                                            <arg declaringType="java.lang.String" toString="154a20e6-d30f-4264-a0f3-06b68f5bf3eb"/>
+                                        </args>
+                                        <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="39"/>
+                                    </joinPoint>
+                                    <returnValue/>
+                                </invocation>
+                                <invocation depth="4" durationNanoTime="8510" durationPercentage="35.00185086167894">
+                                    <joinPoint>
+                                        <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@65c90ca"/>
+                                        <signature declaringType="com.github.woozoo73.test.dummy.User" name="setName" modifiers="1"/>
+                                        <args>
+                                            <arg declaringType="java.lang.String" toString="foo"/>
+                                        </args>
+                                        <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="47"/>
+                                    </joinPoint>
+                                    <returnValue/>
+                                </invocation>
+                            </childInvocationList>
+                        </invocation>
+                        <invocation depth="3" durationNanoTime="11751" durationPercentage="3.2546468247044062">
+                            <joinPoint>
+                                <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@65c90ca"/>
+                                <signature declaringType="com.github.woozoo73.test.dummy.User" name="getName" modifiers="1"/>
+                                <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="43"/>
+                            </joinPoint>
+                            <returnValue declaringType="java.lang.String" toString="foo"/>
+                        </invocation>
+                    </childInvocationList>
+                    <returnValue declaringType="java.lang.String" toString="Hello, foo."/>
+                </invocation>
+                <invocation depth="2" durationNanoTime="44648009" durationPercentage="4.492515579023209">
+                    <joinPoint>
+                        <target declaringType="com.github.woozoo73.test.dummy.ProcessorImpl" toString="com.github.woozoo73.test.dummy.ProcessorImpl@4ff28fab"/>
+                        <signature declaringType="com.github.woozoo73.test.dummy.ProcessorImpl" name="processInternal" modifiers="2"/>
+                        <args>
+                            <arg declaringType="java.lang.String" toString="foo"/>
+                        </args>
+                        <sourceLocation withinType="com.github.woozoo73.test.dummy.ProcessorImpl" line="43"/>
+                    </joinPoint>
+                    <jdbc>
+                        <statements>
+                            <statement durationNanoTime="204231">
+                                <sql>INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )</sql>
+                                <parameters>
+                                    <parameter declaringType="java.lang.String" toString="834ed676-971c-4ed6-b9ec-ed56ddae212d"/>
+                                    <parameter declaringType="java.lang.String" toString="foo"/>
+                                </parameters>
+                            </statement>
+                            <statement durationNanoTime="86312">
+                                <sql>INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )</sql>
+                                <t declaringType="java.sql.SQLException" toString="java.sql.SQLException: Parameter not set"/>
+                            </statement>
+                            <statement durationNanoTime="670235">
+                                <sql>SELECT * FROM USER WHERE ID = ?</sql>
+                                <parameters>
+                                    <parameter declaringType="java.lang.String" toString="834ed676-971c-4ed6-b9ec-ed56ddae212d"/>
+                                </parameters>
+                            </statement>
+                        </statements>
+                    </jdbc>
+                    <childInvocationList>
+                        <invocation depth="3" durationNanoTime="89553" durationPercentage="35.47327808850791">
+                            <joinPoint>
+                                <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@2725c109"/>
+                                <signature declaringType="com.github.woozoo73.test.dummy.User" name="&lt;init&gt;" modifiers="1"/>
+                                <args>
+                                    <arg declaringType="java.lang.String" toString="834ed676-971c-4ed6-b9ec-ed56ddae212d"/>
+                                    <arg declaringType="java.lang.String" toString="foo"/>
+                                </args>
+                                <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="27"/>
+                            </joinPoint>
+                            <childInvocationList>
+                                <invocation depth="4" durationNanoTime="10941" durationPercentage="50.942869115798295">
+                                    <joinPoint>
+                                        <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@2725c109"/>
+                                        <signature declaringType="com.github.woozoo73.test.dummy.User" name="setId" modifiers="1"/>
+                                        <args>
+                                            <arg declaringType="java.lang.String" toString="834ed676-971c-4ed6-b9ec-ed56ddae212d"/>
+                                        </args>
+                                        <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="39"/>
+                                    </joinPoint>
+                                    <returnValue/>
+                                </invocation>
+                                <invocation depth="4" durationNanoTime="10536" durationPercentage="49.057130884201705">
+                                    <joinPoint>
+                                        <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@2725c109"/>
+                                        <signature declaringType="com.github.woozoo73.test.dummy.User" name="setName" modifiers="1"/>
+                                        <args>
+                                            <arg declaringType="java.lang.String" toString="foo"/>
+                                        </args>
+                                        <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="47"/>
+                                    </joinPoint>
+                                    <returnValue/>
+                                </invocation>
+                            </childInvocationList>
+                        </invocation>
+                        <invocation depth="3" durationNanoTime="13778" durationPercentage="5.457671161250455">
+                            <joinPoint>
+                                <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@2725c109"/>
+                                <signature declaringType="com.github.woozoo73.test.dummy.User" name="getId" modifiers="1"/>
+                                <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="35"/>
+                            </joinPoint>
+                            <returnValue declaringType="java.lang.String" toString="834ed676-971c-4ed6-b9ec-ed56ddae212d"/>
+                        </invocation>
+                        <invocation depth="3" durationNanoTime="13372" durationPercentage="5.296848509815727">
+                            <joinPoint>
+                                <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@2725c109"/>
+                                <signature declaringType="com.github.woozoo73.test.dummy.User" name="getName" modifiers="1"/>
+                                <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="43"/>
+                            </joinPoint>
+                            <returnValue declaringType="java.lang.String" toString="foo"/>
+                        </invocation>
+                        <invocation depth="3" durationNanoTime="119945" durationPercentage="47.512002281621854">
+                            <joinPoint>
+                                <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@49bdb8b2"/>
+                                <signature declaringType="com.github.woozoo73.test.dummy.User" name="&lt;init&gt;" modifiers="1"/>
+                                <args>
+                                    <arg declaringType="java.lang.String" toString="834ed676-971c-4ed6-b9ec-ed56ddae212d"/>
+                                    <arg declaringType="java.lang.String" toString="foo"/>
+                                </args>
+                                <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="27"/>
+                            </joinPoint>
+                            <childInvocationList>
+                                <invocation depth="4" durationNanoTime="21071" durationPercentage="61.90434220577002">
+                                    <joinPoint>
+                                        <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@49bdb8b2"/>
+                                        <signature declaringType="com.github.woozoo73.test.dummy.User" name="setId" modifiers="1"/>
+                                        <args>
+                                            <arg declaringType="java.lang.String" toString="834ed676-971c-4ed6-b9ec-ed56ddae212d"/>
+                                        </args>
+                                        <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="39"/>
+                                    </joinPoint>
+                                    <returnValue/>
+                                </invocation>
+                                <invocation depth="4" durationNanoTime="12967" durationPercentage="38.09565779422998">
+                                    <joinPoint>
+                                        <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@49bdb8b2"/>
+                                        <signature declaringType="com.github.woozoo73.test.dummy.User" name="setName" modifiers="1"/>
+                                        <args>
+                                            <arg declaringType="java.lang.String" toString="foo"/>
+                                        </args>
+                                        <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="47"/>
+                                    </joinPoint>
+                                    <returnValue/>
+                                </invocation>
+                            </childInvocationList>
+                        </invocation>
+                        <invocation depth="3" durationNanoTime="15804" durationPercentage="6.26019995880405">
+                            <joinPoint>
+                                <target declaringType="com.github.woozoo73.test.dummy.User" toString="com.github.woozoo73.test.dummy.User@49bdb8b2"/>
+                                <signature declaringType="com.github.woozoo73.test.dummy.User" name="getName" modifiers="1"/>
+                                <sourceLocation withinType="com.github.woozoo73.test.dummy.User" line="43"/>
+                            </joinPoint>
+                            <returnValue declaringType="java.lang.String" toString="foo"/>
+                        </invocation>
+                    </childInvocationList>
+                    <returnValue declaringType="java.lang.String" toString="Hello, foo."/>
                 </invocation>
             </childInvocationList>
-            <returnValue/>
-        </invocation>
-        <invocation durationPercentage="94.41022130974844" durationNanoTime="300956588" depth="1">
-            <joinPoint>
-                <target toString="com.github.woozoo73.test.dummy.ProcessorImpl@1e21f52" declaringType="com.github.woozoo73.test.dummy.ProcessorImpl"/>
-                <signature modifiers="2" name="processInternal" declaringType="com.github.woozoo73.test.dummy.ProcessorImpl"/>
-                <args>
-                    <arg toString="foo" declaringType="java.lang.String"/>
-                </args>
-                <sourceLocation line="43" withinType="com.github.woozoo73.test.dummy.ProcessorImpl"/>
-            </joinPoint>
-            <jdbc>
-                <statements>
-                    <statement durationNanoTime="111869898">
-                        <sql>INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )</sql>
-                        <parameters>
-                            <parameter toString="7ff7bcb0-03bf-4ec3-84a4-7be4e9c21585" declaringType="java.lang.String"/>
-                            <parameter toString="foo" declaringType="java.lang.String"/>
-                        </parameters>
-                    </statement>
-                    <statement durationNanoTime="378614">
-                        <sql>SELECT * FROM USER WHERE ID = ?</sql>
-                        <parameters>
-                            <parameter toString="7ff7bcb0-03bf-4ec3-84a4-7be4e9c21585" declaringType="java.lang.String"/>
-                        </parameters>
-                    </statement>
-                </statements>
-            </jdbc>
-            <childInvocationList>
-                <invocation durationPercentage="64.40155350628656" durationNanoTime="180249" depth="2">
-                    <joinPoint>
-                        <target toString="com.github.woozoo73.test.dummy.User@1dc6a9d" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <signature modifiers="1" name="&lt;init&gt;" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <args>
-                            <arg toString="7ff7bcb0-03bf-4ec3-84a4-7be4e9c21585" declaringType="java.lang.String"/>
-                            <arg toString="foo" declaringType="java.lang.String"/>
-                        </args>
-                        <sourceLocation line="27" withinType="com.github.woozoo73.test.dummy.User"/>
-                    </joinPoint>
-                    <childInvocationList>
-                        <invocation durationPercentage="68.3179572384242" durationNanoTime="31250" depth="3">
-                            <joinPoint>
-                                <target toString="com.github.woozoo73.test.dummy.User@1dc6a9d" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <signature modifiers="1" name="setId" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <args>
-                                    <arg toString="7ff7bcb0-03bf-4ec3-84a4-7be4e9c21585" declaringType="java.lang.String"/>
-                                </args>
-                                <sourceLocation line="39" withinType="com.github.woozoo73.test.dummy.User"/>
-                            </joinPoint>
-                            <returnValue/>
-                        </invocation>
-                        <invocation durationPercentage="31.682042761575794" durationNanoTime="14492" depth="3">
-                            <joinPoint>
-                                <target toString="com.github.woozoo73.test.dummy.User@1dc6a9d" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <signature modifiers="1" name="setName" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <args>
-                                    <arg toString="foo" declaringType="java.lang.String"/>
-                                </args>
-                                <sourceLocation line="47" withinType="com.github.woozoo73.test.dummy.User"/>
-                            </joinPoint>
-                            <returnValue/>
-                        </invocation>
-                    </childInvocationList>
-                </invocation>
-                <invocation durationPercentage="4.85417120725446" durationNanoTime="13586" depth="2">
-                    <joinPoint>
-                        <target toString="com.github.woozoo73.test.dummy.User@1dc6a9d" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <signature modifiers="1" name="getId" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <sourceLocation line="35" withinType="com.github.woozoo73.test.dummy.User"/>
-                    </joinPoint>
-                    <returnValue toString="7ff7bcb0-03bf-4ec3-84a4-7be4e9c21585" declaringType="java.lang.String"/>
-                </invocation>
-                <invocation durationPercentage="4.692317861392081" durationNanoTime="13133" depth="2">
-                    <joinPoint>
-                        <target toString="com.github.woozoo73.test.dummy.User@1dc6a9d" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <signature modifiers="1" name="getName" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <sourceLocation line="43" withinType="com.github.woozoo73.test.dummy.User"/>
-                    </joinPoint>
-                    <returnValue toString="foo" declaringType="java.lang.String"/>
-                </invocation>
-                <invocation durationPercentage="23.301165129714917" durationNanoTime="65216" depth="2">
-                    <joinPoint>
-                        <target toString="com.github.woozoo73.test.dummy.User@7bf4c3" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <signature modifiers="1" name="&lt;init&gt;" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <args>
-                            <arg toString="7ff7bcb0-03bf-4ec3-84a4-7be4e9c21585" declaringType="java.lang.String"/>
-                            <arg toString="foo" declaringType="java.lang.String"/>
-                        </args>
-                        <sourceLocation line="27" withinType="com.github.woozoo73.test.dummy.User"/>
-                    </joinPoint>
-                    <childInvocationList>
-                        <invocation durationPercentage="68.18387112962313" durationNanoTime="13587" depth="3">
-                            <joinPoint>
-                                <target toString="com.github.woozoo73.test.dummy.User@7bf4c3" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <signature modifiers="1" name="setId" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <args>
-                                    <arg toString="7ff7bcb0-03bf-4ec3-84a4-7be4e9c21585" declaringType="java.lang.String"/>
-                                </args>
-                                <sourceLocation line="39" withinType="com.github.woozoo73.test.dummy.User"/>
-                            </joinPoint>
-                            <returnValue/>
-                        </invocation>
-                        <invocation durationPercentage="31.816128870376875" durationNanoTime="6340" depth="3">
-                            <joinPoint>
-                                <target toString="com.github.woozoo73.test.dummy.User@7bf4c3" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <signature modifiers="1" name="setName" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <args>
-                                    <arg toString="foo" declaringType="java.lang.String"/>
-                                </args>
-                                <sourceLocation line="47" withinType="com.github.woozoo73.test.dummy.User"/>
-                            </joinPoint>
-                            <returnValue/>
-                        </invocation>
-                    </childInvocationList>
-                </invocation>
-                <invocation durationPercentage="2.7507922953519865" durationNanoTime="7699" depth="2">
-                    <joinPoint>
-                        <target toString="com.github.woozoo73.test.dummy.User@7bf4c3" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <signature modifiers="1" name="getName" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <sourceLocation line="43" withinType="com.github.woozoo73.test.dummy.User"/>
-                    </joinPoint>
-                    <returnValue toString="foo" declaringType="java.lang.String"/>
-                </invocation>
-            </childInvocationList>
-            <returnValue toString="Hello, foo." declaringType="java.lang.String"/>
-        </invocation>
-        <invocation durationPercentage="2.1697064361883425" durationNanoTime="6916491" depth="1">
-            <joinPoint>
-                <target toString="com.github.woozoo73.test.dummy.ProcessorImpl@1e21f52" declaringType="com.github.woozoo73.test.dummy.ProcessorImpl"/>
-                <signature modifiers="2" name="processInternal" declaringType="com.github.woozoo73.test.dummy.ProcessorImpl"/>
-                <args>
-                    <arg toString="foo" declaringType="java.lang.String"/>
-                </args>
-                <sourceLocation line="43" withinType="com.github.woozoo73.test.dummy.ProcessorImpl"/>
-            </joinPoint>
-            <jdbc>
-                <statements>
-                    <statement durationNanoTime="245465">
-                        <sql>INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )</sql>
-                        <parameters>
-                            <parameter toString="968d8336-35b9-4765-a3a3-9e10784e8a9f" declaringType="java.lang.String"/>
-                            <parameter toString="foo" declaringType="java.lang.String"/>
-                        </parameters>
-                    </statement>
-                    <statement durationNanoTime="283054">
-                        <sql>SELECT * FROM USER WHERE ID = ?</sql>
-                        <parameters>
-                            <parameter toString="968d8336-35b9-4765-a3a3-9e10784e8a9f" declaringType="java.lang.String"/>
-                        </parameters>
-                    </statement>
-                </statements>
-            </jdbc>
-            <childInvocationList>
-                <invocation durationPercentage="32.55133294049847" durationNanoTime="50270" depth="2">
-                    <joinPoint>
-                        <target toString="com.github.woozoo73.test.dummy.User@24d3a" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <signature modifiers="1" name="&lt;init&gt;" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <args>
-                            <arg toString="968d8336-35b9-4765-a3a3-9e10784e8a9f" declaringType="java.lang.String"/>
-                            <arg toString="foo" declaringType="java.lang.String"/>
-                        </args>
-                        <sourceLocation line="27" withinType="com.github.woozoo73.test.dummy.User"/>
-                    </joinPoint>
-                    <childInvocationList>
-                        <invocation durationPercentage="50.0" durationNanoTime="8152" depth="3">
-                            <joinPoint>
-                                <target toString="com.github.woozoo73.test.dummy.User@24d3a" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <signature modifiers="1" name="setId" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <args>
-                                    <arg toString="968d8336-35b9-4765-a3a3-9e10784e8a9f" declaringType="java.lang.String"/>
-                                </args>
-                                <sourceLocation line="39" withinType="com.github.woozoo73.test.dummy.User"/>
-                            </joinPoint>
-                            <returnValue/>
-                        </invocation>
-                        <invocation durationPercentage="50.0" durationNanoTime="8152" depth="3">
-                            <joinPoint>
-                                <target toString="com.github.woozoo73.test.dummy.User@24d3a" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <signature modifiers="1" name="setName" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <args>
-                                    <arg toString="foo" declaringType="java.lang.String"/>
-                                </args>
-                                <sourceLocation line="47" withinType="com.github.woozoo73.test.dummy.User"/>
-                            </joinPoint>
-                            <returnValue/>
-                        </invocation>
-                    </childInvocationList>
-                </invocation>
-                <invocation durationPercentage="5.278017004137717" durationNanoTime="8151" depth="2">
-                    <joinPoint>
-                        <target toString="com.github.woozoo73.test.dummy.User@24d3a" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <signature modifiers="1" name="getId" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <sourceLocation line="35" withinType="com.github.woozoo73.test.dummy.User"/>
-                    </joinPoint>
-                    <returnValue toString="968d8336-35b9-4765-a3a3-9e10784e8a9f" declaringType="java.lang.String"/>
-                </invocation>
-                <invocation durationPercentage="5.571995622697221" durationNanoTime="8605" depth="2">
-                    <joinPoint>
-                        <target toString="com.github.woozoo73.test.dummy.User@24d3a" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <signature modifiers="1" name="getName" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <sourceLocation line="43" withinType="com.github.woozoo73.test.dummy.User"/>
-                    </joinPoint>
-                    <returnValue toString="foo" declaringType="java.lang.String"/>
-                </invocation>
-                <invocation durationPercentage="49.56065089715281" durationNanoTime="76538" depth="2">
-                    <joinPoint>
-                        <target toString="com.github.woozoo73.test.dummy.User@760838" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <signature modifiers="1" name="&lt;init&gt;" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <args>
-                            <arg toString="968d8336-35b9-4765-a3a3-9e10784e8a9f" declaringType="java.lang.String"/>
-                            <arg toString="foo" declaringType="java.lang.String"/>
-                        </args>
-                        <sourceLocation line="27" withinType="com.github.woozoo73.test.dummy.User"/>
-                    </joinPoint>
-                    <childInvocationList>
-                        <invocation durationPercentage="61.665562670199456" durationNanoTime="16757" depth="3">
-                            <joinPoint>
-                                <target toString="com.github.woozoo73.test.dummy.User@760838" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <signature modifiers="1" name="setId" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <args>
-                                    <arg toString="968d8336-35b9-4765-a3a3-9e10784e8a9f" declaringType="java.lang.String"/>
-                                </args>
-                                <sourceLocation line="39" withinType="com.github.woozoo73.test.dummy.User"/>
-                            </joinPoint>
-                            <returnValue/>
-                        </invocation>
-                        <invocation durationPercentage="38.334437329800544" durationNanoTime="10417" depth="3">
-                            <joinPoint>
-                                <target toString="com.github.woozoo73.test.dummy.User@760838" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <signature modifiers="1" name="setName" declaringType="com.github.woozoo73.test.dummy.User"/>
-                                <args>
-                                    <arg toString="foo" declaringType="java.lang.String"/>
-                                </args>
-                                <sourceLocation line="47" withinType="com.github.woozoo73.test.dummy.User"/>
-                            </joinPoint>
-                            <returnValue/>
-                        </invocation>
-                    </childInvocationList>
-                </invocation>
-                <invocation durationPercentage="7.038003535513782" durationNanoTime="10869" depth="2">
-                    <joinPoint>
-                        <target toString="com.github.woozoo73.test.dummy.User@760838" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <signature modifiers="1" name="getName" declaringType="com.github.woozoo73.test.dummy.User"/>
-                        <sourceLocation line="43" withinType="com.github.woozoo73.test.dummy.User"/>
-                    </joinPoint>
-                    <returnValue toString="foo" declaringType="java.lang.String"/>
-                </invocation>
-            </childInvocationList>
-            <returnValue toString="Hello, foo." declaringType="java.lang.String"/>
+            <returnValue declaringType="java.lang.String" toString="Hello, foo. Hello, foo."/>
         </invocation>
     </childInvocationList>
-    <returnValue toString="Hello, foo. Hello, foo." declaringType="java.lang.String"/>
+    <returnValue/>
 </invocation>

@@ -71,6 +71,7 @@
 			<xs:sequence>
 				<xs:element name="sql" type="xs:string" />
 				<xs:element ref="parameters" minOccurs="0" />
+				<xs:element ref="t" minOccurs="0" />
 			</xs:sequence>
 			<xs:attribute name="durationNanoTime" type="xs:long"
 				use="required" />
