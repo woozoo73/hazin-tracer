@@ -88,10 +88,10 @@ public class InvocationAspect {
 	}
 
 	@Before("profilePointcut()")
-	public Invocation profileBefore(JoinPoint joinPoint) {
+	public void profileBefore(JoinPoint joinPoint) {
 		Invocation endpointInvocation = Context.getEndpointInvocation();
 		if (endpointInvocation == null && !filter.accept(joinPoint)) {
-			return null;
+			return;
 		}
 
 		Invocation invocation = new Invocation();
@@ -110,8 +110,6 @@ public class InvocationAspect {
 		Context.addToInvocationStack(invocation);
 
 		invocation.start();
-
-		return invocation;
 	}
 
 	@After("profilePointcut()")
