@@ -217,7 +217,7 @@ public class DefaultFormat implements Format {
 		indent(builder, depth);
 		builder.append("       ");
 		if (sub) {
-			builder.append("    |");
+			builder.append("    | ");
 		}
 	}
 

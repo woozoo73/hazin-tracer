@@ -45,7 +45,7 @@ public class JdbcAspect {
 	}
 
 	@AfterReturning(pointcut = "prepareStatementPointcut()", returning = "r")
-	public void profilePrepareStatement(JoinPoint joinPoint, Object r) throws Throwable {
+	public void profilePrepareStatement(JoinPoint joinPoint, Object r) {
 		if (r == null) {
 			return;
 		}

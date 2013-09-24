@@ -16,15 +16,15 @@
 package com.github.woozoo73.ht;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 
-import com.github.woozoo73.ht.filter.Filter;
 import com.github.woozoo73.ht.filter.ClassFilter;
+import com.github.woozoo73.ht.filter.Filter;
 import com.github.woozoo73.ht.format.DefaultFormat;
 import com.github.woozoo73.ht.format.Format;
 import com.github.woozoo73.ht.writer.LogWriter;
@@ -71,49 +71,24 @@ public class InvocationAspect {
 		}
 	}
 
-	@Pointcut("!within(com.github.woozoo73.ht..*) && execution(* *.*(..)) && !cflow(call(String *.toString())) && !within(java.sql..*+) && !cflow(call(* java.sql..*+.*(..)))")
+	@Pointcut("!within(com.github.woozoo73.ht..*) && !cflow(call(String *.toString())) && !within(java.sql..*+) && !cflow(call(* java.sql..*+.*(..)))")
+	public void excludePointcut() {
+	}
+
+	@Pointcut("excludePointcut() && execution(* *.*(..))")
 	public void executionPointcut() {
 	}
 
-	@Pointcut("!within(com.github.woozoo73.ht..*) && initialization(*.new(..)) && !cflow(call(String *.toString())) && !within(java.sql..*+) && !cflow(call(* java.sql..*+.*(..)))")
+	@Pointcut("excludePointcut() && initialization(*.new(..))")
 	public void initializationPointcut() {
 	}
 
-	@Before("initializationPointcut()")
-	public void before(JoinPoint joinPoint) throws Throwable {
-		beforeProfile(joinPoint);
+	@Pointcut("executionPointcut() || initializationPointcut()")
+	public void profilePointcut() {
 	}
 
-	@After("initializationPointcut()")
-	public void after(JoinPoint joinPoint) throws Throwable {
-		afterProfile(joinPoint);
-	}
-
-	@Around("executionPointcut()")
-	public Object profile(ProceedingJoinPoint joinPoint) throws Throwable {
-		Invocation invocation = beforeProfile(joinPoint);
-		Object returnValue = null;
-
-		try {
-			returnValue = joinPoint.proceed();
-
-			if (invocation != null) {
-				invocation.setReturnValueInfo(new ObjectInfo(returnValue));
-			}
-
-			return returnValue;
-		} catch (Throwable t) {
-			if (invocation != null) {
-				invocation.setThrowableInfo(new ObjectInfo(t));
-			}
-
-			throw t;
-		} finally {
-			afterProfile(joinPoint);
-		}
-	}
-
-	private Invocation beforeProfile(JoinPoint joinPoint) throws Throwable {
+	@Before("profilePointcut()")
+	public Invocation profileBefore(JoinPoint joinPoint) {
 		Invocation endpointInvocation = Context.getEndpointInvocation();
 		if (endpointInvocation == null && !filter.accept(joinPoint)) {
 			return null;
@@ -139,13 +114,9 @@ public class InvocationAspect {
 		return invocation;
 	}
 
-	private void afterProfile(JoinPoint joinPoint) throws Throwable {
-		Invocation endpointInvocation = Context.getEndpointInvocation();
-		if (endpointInvocation == null) {
-			return;
-		}
-
-		Invocation invocation = endpointInvocation.getInvocationByJoinPoint(joinPoint);
+	@After("profilePointcut()")
+	public void profileAfter(JoinPoint joinPoint) {
+		Invocation invocation = getInvocation(joinPoint);
 		if (invocation == null) {
 			return;
 		}
@@ -159,6 +130,40 @@ public class InvocationAspect {
 
 			writer.write(i);
 		}
+	}
+
+	@AfterThrowing(pointcut = "profilePointcut()", throwing = "t")
+	public void profileAfterThrowing(JoinPoint joinPoint, Throwable t) {
+		Invocation invocation = getInvocation(joinPoint);
+		if (invocation == null) {
+			return;
+		}
+
+		invocation.setThrowableInfo(new ObjectInfo(t));
+	}
+
+	@AfterReturning(pointcut = "profilePointcut()", returning = "r")
+	public void profileAfterReturning(JoinPoint joinPoint, Object r) {
+		Invocation invocation = getInvocation(joinPoint);
+		if (invocation == null) {
+			return;
+		}
+
+		invocation.setReturnValueInfo(new ObjectInfo(r));
+	}
+
+	private Invocation getInvocation(JoinPoint joinPoint) {
+		Invocation endpointInvocation = Context.getEndpointInvocation();
+		if (endpointInvocation == null) {
+			return null;
+		}
+
+		Invocation invocation = endpointInvocation.getInvocationByJoinPoint(joinPoint);
+		if (invocation == null) {
+			return null;
+		}
+
+		return invocation;
 	}
 
 }
