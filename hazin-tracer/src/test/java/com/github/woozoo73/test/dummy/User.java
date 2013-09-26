@@ -20,7 +20,7 @@ import org.springframework.util.Assert;
 public class User {
 
 	private String id;
-	
+
 	private String name;
 
 	public User(String id, String name) {
@@ -46,5 +46,5 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 }

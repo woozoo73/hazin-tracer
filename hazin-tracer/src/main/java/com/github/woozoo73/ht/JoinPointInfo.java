@@ -41,7 +41,7 @@ public class JoinPointInfo implements Serializable {
 
 	@XmlElement
 	private ObjectInfo target;
-	
+
 	@XmlElement(name = "signature")
 	private SignatureInfo signatureInfo;
 

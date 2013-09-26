@@ -55,7 +55,7 @@ public class Invocation implements Serializable {
 	@XmlElement(name = "joinPoint")
 	private JoinPointInfo joinPointInfo;
 
-	@XmlElement(name="jdbc")
+	@XmlElement(name = "jdbc")
 	private JdbcInfo jdbcInfo;
 
 	@XmlAttribute
@@ -192,7 +192,7 @@ public class Invocation implements Serializable {
 	public void setJoinPointInfo(JoinPointInfo joinPointInfo) {
 		this.joinPointInfo = joinPointInfo;
 	}
-	
+
 	public JdbcInfo getJdbcInfo() {
 		return jdbcInfo;
 	}

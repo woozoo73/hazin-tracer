@@ -33,7 +33,7 @@ public class ProcessorTest extends AbstractSpringTestCase {
 	private Server server;
 
 	private String databasePath = "/hsqldb/test";
-	
+
 	@Before
 	public void setUp() throws Exception {
 		startHsqldb();

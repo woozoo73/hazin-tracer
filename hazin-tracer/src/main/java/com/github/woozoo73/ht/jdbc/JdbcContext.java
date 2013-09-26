@@ -20,7 +20,6 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class JdbcContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -61,8 +61,7 @@ public class FileWriter implements Writer {
 		JoinPointInfo joinPointInfo = invocation.getJoinPointInfo();
 		SignatureInfo signatureInfo = joinPointInfo.getSignatureInfo();
 
-		return new File(directory, signatureInfo.getDeclaringTypeName() + "."
-				+ signatureInfo.getName());
+		return new File(directory, signatureInfo.getDeclaringTypeName() + "." + signatureInfo.getName());
 	}
 
 }

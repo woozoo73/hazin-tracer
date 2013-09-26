@@ -33,7 +33,7 @@ public class AbstractDao {
 		int result = 0;
 		Connection con = null;
 		PreparedStatement ps = null;
-	
+
 		try {
 			con = getConnection();
 			ps = con.prepareStatement(sql);
@@ -42,7 +42,7 @@ public class AbstractDao {
 					ps.setObject(i + 1, args[i]);
 				}
 			}
-	
+
 			result = ps.executeUpdate();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -60,7 +60,7 @@ public class AbstractDao {
 				}
 			}
 		}
-	
+
 		return result;
 	}
 
@@ -68,7 +68,7 @@ public class AbstractDao {
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement ps = null;
-	
+
 		try {
 			con = getConnection();
 			ps = con.prepareStatement(sql);
@@ -77,7 +77,7 @@ public class AbstractDao {
 					ps.setObject(i + 1, args[i]);
 				}
 			}
-	
+
 			rs = ps.executeQuery();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -95,13 +95,13 @@ public class AbstractDao {
 				}
 			}
 		}
-	
+
 		return rs;
 	}
 
 	protected Connection getConnection() throws Exception {
 		Connection con = DriverManager.getConnection("jdbc:hsqldb:file:" + DATABASE_PATH, "SA", "");
-	
+
 		return con;
 	}
 

@@ -70,18 +70,18 @@ public class JdbcProfilingTest {
 	@Test
 	public void testUpdateSql() {
 		String id = "woo";
-		executeUpdate("INSERT INTO USER ( ID, NAME ) VALUES ( '" + id + "', 'woo' )", null );
+		executeUpdate("INSERT INTO USER ( ID, NAME ) VALUES ( '" + id + "', 'woo' )", null);
 	}
 
 	@Test
 	public void testUpdateSqlWithParameter() {
 		String id = "woo";
-		executeUpdate("INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )", new Object[] { id, id } );
+		executeUpdate("INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )", new Object[] { id, id });
 	}
 
 	@Test
 	public void testSelectSqlWithParameter() {
-		executeQuery("SELECT * FROM USER WHERE ID = ?", new Object[] { "woo" } );		
+		executeQuery("SELECT * FROM USER WHERE ID = ?", new Object[] { "woo" });
 	}
 
 	private int executeUpdate(String sql, Object[] args) {

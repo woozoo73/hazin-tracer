@@ -57,7 +57,8 @@ public class FileWriterTest extends AbstractTest {
 
 	@After
 	public void tearDown() throws Exception {
-		File file = new File(directory, invocation.getJoinPointInfo().getSignatureInfo().getDeclaringTypeName() + "." + invocation.getJoinPointInfo().getSignatureInfo().getName());
+		File file = new File(directory, invocation.getJoinPointInfo().getSignatureInfo().getDeclaringTypeName() + "."
+				+ invocation.getJoinPointInfo().getSignatureInfo().getName());
 		if (file.exists()) {
 			file.delete();
 		}
@@ -67,7 +68,8 @@ public class FileWriterTest extends AbstractTest {
 	public void testWrite() throws Exception {
 		fileWriter.write(invocation);
 
-		File file = new File(directory, invocation.getJoinPointInfo().getSignatureInfo().getDeclaringTypeName() + "." + invocation.getJoinPointInfo().getSignatureInfo().getName());
+		File file = new File(directory, invocation.getJoinPointInfo().getSignatureInfo().getDeclaringTypeName() + "."
+				+ invocation.getJoinPointInfo().getSignatureInfo().getName());
 		logger.debug(file);
 		assertThat(file.exists(), is(true));
 
@@ -80,7 +82,9 @@ public class FileWriterTest extends AbstractTest {
 	public void testGetOutputFile() {
 		File outputFileName = fileWriter.getOutputFile(invocation);
 		logger.debug(outputFileName);
-		assertThat(outputFileName, is(new File(directory, invocation.getJoinPointInfo().getSignatureInfo().getDeclaringTypeName() + "." + invocation.getJoinPointInfo().getSignatureInfo().getName())));
+		assertThat(outputFileName, is(new File(directory, invocation.getJoinPointInfo().getSignatureInfo()
+				.getDeclaringTypeName()
+				+ "." + invocation.getJoinPointInfo().getSignatureInfo().getName())));
 	}
 
 }
