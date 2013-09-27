@@ -17,7 +17,7 @@ package com.github.woozoo73.ht.filter;
 
 import org.aspectj.lang.JoinPoint;
 
-import com.github.woozoo73.ht.util.AntPathMatcher;
+import com.github.woozoo73.ht.util.PatternMatchUtils;
 
 /**
  * Class filter using Ant style path.
@@ -28,15 +28,13 @@ public class ClassFilter implements Filter {
 
 	private String pattern;
 
-	private AntPathMatcher matcher = new AntPathMatcher();
-
 	public ClassFilter() {
 		this.pattern = System.getProperty("ht.classfilter.pattern", "*");
 	}
 
 	@Override
 	public boolean accept(JoinPoint joinPoint) {
-		return matcher.match(pattern, joinPoint.getSignature().getDeclaringType().getName());
+		return PatternMatchUtils.simpleMatch(pattern, joinPoint.getSignature().getDeclaringType().getName());
 	}
 
 }
