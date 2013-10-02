@@ -13,31 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.woozoo73.ht.writer;
+package com.github.woozoo73.ht.callback;
 
 import com.github.woozoo73.ht.Invocation;
-import com.github.woozoo73.ht.format.Format;
+import com.github.woozoo73.ht.writer.Writer;
 
-/**
- * Writer do nothing.
- * 
- * @author woozoo73
- */
-public class NullWriter implements Writer {
+public class WriterCallback implements InvocationCallback {
+
+	private Writer writer;
 
 	@Override
-	public Format getFormat() {
-		return null;
+	public void before(Invocation invocation) {
 	}
 
 	@Override
-	public void setFormat(Format format) {
-		// do nothing.
+	public void after(Invocation invocation) {
+		writer.write(invocation);
 	}
 
-	@Override
-	public void write(Invocation invocation) {
-		// do nothing.
+	public Writer getWriter() {
+		return writer;
+	}
+
+	public void setWriter(Writer writer) {
+		this.writer = writer;
 	}
 
 }

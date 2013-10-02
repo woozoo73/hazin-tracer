@@ -23,12 +23,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 
-import com.github.woozoo73.ht.filter.ClassFilter;
-import com.github.woozoo73.ht.filter.Filter;
-import com.github.woozoo73.ht.format.DefaultFormat;
-import com.github.woozoo73.ht.format.Format;
-import com.github.woozoo73.ht.writer.LogWriter;
-import com.github.woozoo73.ht.writer.Writer;
+import com.github.woozoo73.ht.conf.Config;
+import com.github.woozoo73.ht.conf.factory.ArgsConfigFactory;
+import com.github.woozoo73.ht.conf.factory.ConfigFactory;
 
 /**
  * Invocation aspect.
@@ -38,34 +35,18 @@ import com.github.woozoo73.ht.writer.Writer;
 @Aspect
 public class InvocationAspect {
 
-	private Writer writer;
-
-	private Filter filter;
+	private Config config;
 
 	public InvocationAspect() {
-		initWriter();
-		initFilter();
+		initConfig();
 	}
 
-	private void initWriter() {
+	private void initConfig() {
 		try {
-			String formatName = System.getProperty("ht.format", DefaultFormat.class.getName());
-			Format format = (Format) Class.forName(formatName).newInstance();
+			String configFactoryName = System.getProperty("ht.conf.factory", ArgsConfigFactory.class.getName());
+			ConfigFactory configFactory = (ConfigFactory) Class.forName(configFactoryName).newInstance();
 
-			String witerName = System.getProperty("ht.writer", LogWriter.class.getName());
-			Writer writer = (Writer) Class.forName(witerName).newInstance();
-			writer.setFormat(format);
-
-			this.writer = writer;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private void initFilter() {
-		try {
-			String filterName = System.getProperty("ht.filter", ClassFilter.class.getName());
-			this.filter = (Filter) Class.forName(filterName).newInstance();
+			config = configFactory.getConfig();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -90,7 +71,7 @@ public class InvocationAspect {
 	@Before("profilePointcut()")
 	public void profileBefore(JoinPoint joinPoint) {
 		Invocation endpointInvocation = Context.getEndpointInvocation();
-		if (endpointInvocation == null && !filter.accept(joinPoint)) {
+		if (endpointInvocation == null && !config.getFilter().accept(joinPoint)) {
 			return;
 		}
 
@@ -100,6 +81,8 @@ public class InvocationAspect {
 
 		if (endpointInvocation == null) {
 			Context.setEndpointInvocation(invocation);
+
+			config.getInvocationCallback().before(invocation);
 		}
 
 		Invocation currentInvocation = Context.peekFromInvocationStack();
@@ -126,7 +109,7 @@ public class InvocationAspect {
 		if (invocation.equalsJoinPoint(Context.getEndpointInvocation())) {
 			Invocation i = Context.dump();
 
-			writer.write(i);
+			config.getInvocationCallback().after(i);
 		}
 	}
 

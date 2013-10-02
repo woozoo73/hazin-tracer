@@ -35,42 +35,34 @@ public class ClassFilterTest {
 
 	@Test
 	public void testAccept() {
-		ClassFilter filter = null;
+		ClassFilter filter = new ClassFilter();
 
 		when(joinPoint.getSignature()).thenReturn(signature);
 		when(signature.getDeclaringType()).thenReturn(declaringType);
 
-		System.setProperty("ht.classfilter.pattern", "*");
-		filter = new ClassFilter();
+		filter.setPattern("*");
 		assertThat(filter.accept(joinPoint), is(true));
 
-		System.setProperty("ht.classfilter.pattern", declaringType.getName());
-		filter = new ClassFilter();
+		filter.setPattern(declaringType.getName());
 		assertThat(filter.accept(joinPoint), is(true));
 
-		System.setProperty("ht.classfilter.pattern", declaringType.getPackage().getName() + ".*");
-		filter = new ClassFilter();
+		filter.setPattern(declaringType.getPackage().getName() + ".*");
 		assertThat(filter.accept(joinPoint), is(true));
 
-		System.setProperty("ht.classfilter.pattern", declaringType.getPackage().getName() + ".S*");
-		filter = new ClassFilter();
+		filter.setPattern(declaringType.getPackage().getName() + ".S*");
 		assertThat(filter.accept(joinPoint), is(true));
 
-		System.setProperty("ht.classfilter.pattern", declaringType.getPackage().getName() + ".*trin*");
-		filter = new ClassFilter();
+		filter.setPattern(declaringType.getPackage().getName() + ".*trin*");
 		assertThat(filter.accept(joinPoint), is(true));
 
-		System.setProperty("ht.classfilter.pattern", declaringType.getPackage().getName() + ".T*");
-		filter = new ClassFilter();
+		filter.setPattern(declaringType.getPackage().getName() + ".T*");
 		assertThat(filter.accept(joinPoint), is(false));
 
-		System.setProperty("ht.classfilter.pattern", declaringType.getPackage().getName() + ".Strin?");
-		filter = new ClassFilter();
+		filter.setPattern(declaringType.getPackage().getName() + ".Strin*");
 		assertThat(filter.accept(joinPoint), is(true));
 
-		System.setProperty("ht.classfilter.pattern", declaringType.getPackage().getName() + ".Strin??");
-		filter = new ClassFilter();
-		assertThat(filter.accept(joinPoint), is(false));
+		filter.setPattern(declaringType.getPackage().getName() + ".String*");
+		assertThat(filter.accept(joinPoint), is(true));
 	}
 
 }

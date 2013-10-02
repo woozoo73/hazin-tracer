@@ -13,31 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.woozoo73.ht.writer;
+package com.github.woozoo73.ht.conf.factory;
 
-import com.github.woozoo73.ht.Invocation;
-import com.github.woozoo73.ht.format.Format;
+import com.github.woozoo73.ht.conf.Config;
 
-/**
- * Writer do nothing.
- * 
- * @author woozoo73
- */
-public class NullWriter implements Writer {
+public interface ConfigFactory {
 
-	@Override
-	public Format getFormat() {
-		return null;
-	}
-
-	@Override
-	public void setFormat(Format format) {
-		// do nothing.
-	}
-
-	@Override
-	public void write(Invocation invocation) {
-		// do nothing.
-	}
-
+	Config getConfig();
+	
 }

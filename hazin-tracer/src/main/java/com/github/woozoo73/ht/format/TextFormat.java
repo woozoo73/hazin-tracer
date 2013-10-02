@@ -30,13 +30,13 @@ import com.github.woozoo73.ht.jdbc.JdbcInfo;
 import com.github.woozoo73.ht.jdbc.JdbcStatementInfo;
 
 /**
- * Default output format.
+ * Text output format.
  * 
  * @author woozoo73
  */
-public class DefaultFormat implements Format {
+public class TextFormat implements Format {
 
-	private static final Log logger = LogFactory.getLog(DefaultFormat.class);
+	private static final Log logger = LogFactory.getLog(TextFormat.class);
 
 	private static NumberFormat timeFormat = new DecimalFormat("###,##0.00");
 

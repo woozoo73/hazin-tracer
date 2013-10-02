@@ -33,6 +33,11 @@ public class LogWriter implements Writer {
 	private Format format;
 
 	@Override
+	public Format getFormat() {
+		return format;
+	}
+
+	@Override
 	public void setFormat(Format format) {
 		this.format = format;
 	}

@@ -29,7 +29,6 @@ public class ClassFilter implements Filter {
 	private String pattern;
 
 	public ClassFilter() {
-		this.pattern = System.getProperty("ht.classfilter.pattern", "*");
 	}
 
 	@Override
@@ -37,4 +36,12 @@ public class ClassFilter implements Filter {
 		return PatternMatchUtils.simpleMatch(pattern, joinPoint.getSignature().getDeclaringType().getName());
 	}
 
+	public String getPattern() {
+		return pattern;
+	}
+
+	public void setPattern(String pattern) {
+		this.pattern = pattern;
+	}
+	
 }

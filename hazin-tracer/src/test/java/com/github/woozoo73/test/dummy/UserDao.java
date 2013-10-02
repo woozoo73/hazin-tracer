@@ -23,7 +23,7 @@ public class UserDao extends AbstractDao {
 		executeUpdate("INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )", new Object[] { user.getId(), user.getName() });
 	}
 
-	public void insertInvali() {
+	public void insertInvalid() {
 		executeUpdate("INSERT INTO USER ( ID, NAME ) VALUES ( ?, ? )", null);
 	}
 

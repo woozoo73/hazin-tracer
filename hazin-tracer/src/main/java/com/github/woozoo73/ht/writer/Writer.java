@@ -25,6 +25,8 @@ import com.github.woozoo73.ht.format.Format;
  */
 public interface Writer {
 
+	Format getFormat();
+
 	void setFormat(Format format);
 
 	void write(Invocation invocation);

@@ -49,7 +49,7 @@ public class ProcessorImpl implements Processor {
 		userDao.insert(user);
 
 		try {
-			userDao.insertInvali();
+			userDao.insertInvalid();
 		} catch (Exception e) {
 		}
 

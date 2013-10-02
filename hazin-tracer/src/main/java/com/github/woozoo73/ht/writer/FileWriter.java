@@ -30,6 +30,11 @@ public class FileWriter implements Writer {
 	private File directory;
 
 	@Override
+	public Format getFormat() {
+		return format;
+	}
+
+	@Override
 	public void setFormat(Format format) {
 		this.format = format;
 	}
