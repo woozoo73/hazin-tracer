@@ -36,7 +36,7 @@ public class JdbcAspect {
 	public void prepareStatementPointcut() {
 	}
 
-	@Pointcut("within(java.sql.Statement+) && (execution(java.sql.ResultSet+ executeQuery()) || execution(int executeUpdate()))")
+	@Pointcut("within(java.sql.Statement+) && (execution(java.sql.ResultSet+ executeQuery()) || execution(int executeUpdate())) && !cflowbelow(execution(* java.sql..*+.*(..)))")
 	public void executePointcut() {
 	}
 
