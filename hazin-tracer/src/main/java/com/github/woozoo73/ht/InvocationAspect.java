@@ -98,28 +98,17 @@ public class InvocationAspect {
 		invocation.start();
 	}
 
-	@After("profilePointcut()")
+	@After("initializationPointcut()")
 	public void profileAfter(JoinPoint joinPoint) {
 		Invocation invocation = getInvocation(joinPoint);
 		if (invocation == null) {
 			return;
 		}
 
-		invocation.stop();
-
-		Context.popFromInvocationStack();
-
-		if (invocation.equalsJoinPoint(Context.getEndpointInvocation())) {
-			Invocation i = Context.dump();
-
-			try {
-				config.getInvocationCallback().after(i);
-			} catch (Throwable t) {
-			}
-		}
+		afterProfile(invocation);
 	}
 
-	@AfterThrowing(pointcut = "profilePointcut()", throwing = "t")
+	@AfterThrowing(pointcut = "executionPointcut()", throwing = "t")
 	public void profileAfterThrowing(JoinPoint joinPoint, Throwable t) {
 		Invocation invocation = getInvocation(joinPoint);
 		if (invocation == null) {
@@ -128,9 +117,11 @@ public class InvocationAspect {
 
 		invocation.setT(t);
 		invocation.setThrowableInfo(new ObjectInfo(t));
+
+		afterProfile(invocation);
 	}
 
-	@AfterReturning(pointcut = "profilePointcut()", returning = "r")
+	@AfterReturning(pointcut = "executionPointcut()", returning = "r")
 	public void profileAfterReturning(JoinPoint joinPoint, Object r) {
 		Invocation invocation = getInvocation(joinPoint);
 		if (invocation == null) {
@@ -138,7 +129,9 @@ public class InvocationAspect {
 		}
 
 		invocation.setReturnValue(r);
-		invocation.setReturnValueInfo(new ObjectInfo(r));		
+		invocation.setReturnValueInfo(new ObjectInfo(r));
+
+		afterProfile(invocation);
 	}
 
 	private Invocation getInvocation(JoinPoint joinPoint) {
@@ -153,6 +146,21 @@ public class InvocationAspect {
 		}
 
 		return invocation;
+	}
+
+	private void afterProfile(Invocation invocation) {
+		invocation.stop();
+
+		Context.popFromInvocationStack();
+
+		if (invocation.equalsJoinPoint(Context.getEndpointInvocation())) {
+			Invocation i = Context.dump();
+
+			try {
+				config.getInvocationCallback().after(i);
+			} catch (Throwable t) {
+			}
+		}
 	}
 
 }
