@@ -177,11 +177,11 @@ public class Invocation implements Serializable {
 		return childInvocationList;
 	}
 
-	protected JoinPoint getJoinPoint() {
+	public JoinPoint getJoinPoint() {
 		return joinPoint;
 	}
 
-	protected void setJoinPoint(JoinPoint joinPoint) {
+	public void setJoinPoint(JoinPoint joinPoint) {
 		this.joinPoint = joinPoint;
 	}
 
@@ -217,11 +217,11 @@ public class Invocation implements Serializable {
 		this.durationPercentage = durationPercentage;
 	}
 
-	protected Object getReturnValue() {
+	public Object getReturnValue() {
 		return returnValue;
 	}
 
-	protected void setReturnValue(Object returnValue) {
+	public void setReturnValue(Object returnValue) {
 		this.returnValue = returnValue;
 	}
 
@@ -233,11 +233,11 @@ public class Invocation implements Serializable {
 		this.returnValueInfo = returnValueInfo;
 	}
 
-	protected Throwable getT() {
+	public Throwable getT() {
 		return t;
 	}
 
-	protected void setT(Throwable t) {
+	public void setT(Throwable t) {
 		this.t = t;
 	}
 

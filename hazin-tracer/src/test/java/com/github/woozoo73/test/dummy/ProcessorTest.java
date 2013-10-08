@@ -15,17 +15,21 @@
  */
 package com.github.woozoo73.test.dummy;
 
-import java.io.PrintWriter;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hsqldb.Server;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.woozoo73.ht.callback.StatisticsRecorder;
 import com.github.woozoo73.test.AbstractSpringTestCase;
 
 public class ProcessorTest extends AbstractSpringTestCase {
+
+	protected static final Log logger = LogFactory.getLog(ProcessorTest.class);
 
 	@Autowired
 	private Processor processor;
@@ -44,17 +48,31 @@ public class ProcessorTest extends AbstractSpringTestCase {
 		shutdownHsqldb();
 	}
 
+	@AfterClass
+	public static void tearDownAfterClass() {
+		showStatistics();
+	}
+
 	protected void startHsqldb() {
 		server = new Server();
-		server.setLogWriter(new PrintWriter(System.out));
-		server.setErrWriter(new PrintWriter(System.out));
+		server.setLogWriter(null);
+		// server.setLogWriter(new PrintWriter(System.out));
+		// server.setErrWriter(new PrintWriter(System.out));
 		server.setDatabasePath(0, databasePath);
 		server.setDatabaseName(0, "test");
 		server.start();
 	}
 
 	protected void shutdownHsqldb() {
-		server.shutdown();
+		try {
+			server.shutdown();
+		} catch (Exception t) {
+			logger.warn(t.getMessage(), t);
+		}
+	}
+
+	protected static void showStatistics() {
+		logger.debug(StatisticsRecorder.prettyPrint());
 	}
 
 	@Test

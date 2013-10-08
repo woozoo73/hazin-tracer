@@ -29,12 +29,9 @@ public class ProcessorImpl implements Processor {
 
 	@Override
 	public String process(String name) {
-		Timer timer = new Timer();
-		timer.sleep(10L);
+		Timer.sleep(10L);
 
-		String result = "";
-		result += processInternal(name) + " ";
-		result += processInternal(name);
+		String result = processInternal(name) + " ";
 
 		return result;
 	}

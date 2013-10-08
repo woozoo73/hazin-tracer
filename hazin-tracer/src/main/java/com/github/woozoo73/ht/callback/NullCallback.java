@@ -16,32 +16,22 @@
 package com.github.woozoo73.ht.callback;
 
 import com.github.woozoo73.ht.Invocation;
-import com.github.woozoo73.ht.writer.Writer;
 
 /**
- * Invocation callback write the invocation.
+ * Invocation callback do nothing.
  * 
  * @author woozoo73
  */
-public class WriterCallback implements InvocationCallback {
-
-	private Writer writer;
+public class NullCallback implements InvocationCallback {
 
 	@Override
 	public void before(Invocation invocation) {
+		// do nothing.
 	}
 
 	@Override
 	public void after(Invocation invocation) {
-		writer.write(invocation);
-	}
-
-	public Writer getWriter() {
-		return writer;
-	}
-
-	public void setWriter(Writer writer) {
-		this.writer = writer;
+		// do nothing.
 	}
 
 }

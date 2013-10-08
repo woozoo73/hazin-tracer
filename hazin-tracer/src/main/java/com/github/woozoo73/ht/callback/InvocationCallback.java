@@ -17,6 +17,11 @@ package com.github.woozoo73.ht.callback;
 
 import com.github.woozoo73.ht.Invocation;
 
+/**
+ * Invocation callback called before and after profiling.
+ * 
+ * @author woozoo73
+ */
 public interface InvocationCallback {
 
 	void before(Invocation invocation);

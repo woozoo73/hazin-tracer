@@ -17,7 +17,7 @@ package com.github.woozoo73.test.dummy;
 
 public class Timer {
 
-	public void sleep(final long delay) {
+	public static void sleep(final long delay) {
 		Runnable r = new Runnable() {
 			@Override
 			public void run() {

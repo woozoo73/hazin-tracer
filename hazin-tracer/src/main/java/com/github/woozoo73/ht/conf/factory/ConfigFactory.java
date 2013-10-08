@@ -17,6 +17,11 @@ package com.github.woozoo73.ht.conf.factory;
 
 import com.github.woozoo73.ht.conf.Config;
 
+/**
+ * Config factory makes config.
+ * 
+ * @author woozoo73
+ */
 public interface ConfigFactory {
 
 	Config getConfig();

@@ -15,33 +15,47 @@
  */
 package com.github.woozoo73.ht.callback;
 
+import java.util.List;
+
 import com.github.woozoo73.ht.Invocation;
-import com.github.woozoo73.ht.writer.Writer;
 
 /**
- * Invocation callback write the invocation.
+ * Composite invocation callback can holds many callbacks.
  * 
  * @author woozoo73
  */
-public class WriterCallback implements InvocationCallback {
+public class CompositeCallback implements InvocationCallback {
 
-	private Writer writer;
+	private List<InvocationCallback> callbacks;
 
 	@Override
 	public void before(Invocation invocation) {
+		if (callbacks == null) {
+			return;
+		}
+
+		for (InvocationCallback callback : callbacks) {
+			callback.before(invocation);
+		}
 	}
 
 	@Override
 	public void after(Invocation invocation) {
-		writer.write(invocation);
+		if (callbacks == null) {
+			return;
+		}
+
+		for (InvocationCallback callback : callbacks) {
+			callback.after(invocation);
+		}
 	}
 
-	public Writer getWriter() {
-		return writer;
+	public List<InvocationCallback> getCallbacks() {
+		return callbacks;
 	}
 
-	public void setWriter(Writer writer) {
-		this.writer = writer;
+	public void setCallbacks(List<InvocationCallback> callbacks) {
+		this.callbacks = callbacks;
 	}
 
 }

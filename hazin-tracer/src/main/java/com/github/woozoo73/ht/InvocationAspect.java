@@ -82,7 +82,10 @@ public class InvocationAspect {
 		if (endpointInvocation == null) {
 			Context.setEndpointInvocation(invocation);
 
-			config.getInvocationCallback().before(invocation);
+			try {
+				config.getInvocationCallback().before(invocation);
+			} catch (Throwable t) {
+			}
 		}
 
 		Invocation currentInvocation = Context.peekFromInvocationStack();
@@ -109,7 +112,10 @@ public class InvocationAspect {
 		if (invocation.equalsJoinPoint(Context.getEndpointInvocation())) {
 			Invocation i = Context.dump();
 
-			config.getInvocationCallback().after(i);
+			try {
+				config.getInvocationCallback().after(i);
+			} catch (Throwable t) {
+			}
 		}
 	}
 
@@ -120,6 +126,7 @@ public class InvocationAspect {
 			return;
 		}
 
+		invocation.setT(t);
 		invocation.setThrowableInfo(new ObjectInfo(t));
 	}
 
@@ -130,7 +137,8 @@ public class InvocationAspect {
 			return;
 		}
 
-		invocation.setReturnValueInfo(new ObjectInfo(r));
+		invocation.setReturnValue(r);
+		invocation.setReturnValueInfo(new ObjectInfo(r));		
 	}
 
 	private Invocation getInvocation(JoinPoint joinPoint) {

@@ -20,6 +20,11 @@ import java.io.Serializable;
 import com.github.woozoo73.ht.callback.InvocationCallback;
 import com.github.woozoo73.ht.filter.Filter;
 
+/**
+ * Configuration.
+ * 
+ * @author woozoo73
+ */
 public class Config implements Serializable {
 
 	private static final long serialVersionUID = 1L;

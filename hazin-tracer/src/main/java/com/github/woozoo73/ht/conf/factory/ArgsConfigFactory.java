@@ -23,6 +23,11 @@ import com.github.woozoo73.ht.format.TextFormat;
 import com.github.woozoo73.ht.writer.LogWriter;
 import com.github.woozoo73.ht.writer.Writer;
 
+/**
+ * Config factory supports VM arguments.
+ * 
+ * @author woozoo73
+ */
 public class ArgsConfigFactory implements ConfigFactory {
 
 	private Config config;

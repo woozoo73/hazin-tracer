@@ -1,8 +1,8 @@
 package com.github.woozoo73.ht.filter;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;

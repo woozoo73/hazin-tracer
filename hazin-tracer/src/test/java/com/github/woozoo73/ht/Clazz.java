@@ -13,35 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.woozoo73.ht.callback;
+package com.github.woozoo73.ht;
 
-import com.github.woozoo73.ht.Invocation;
-import com.github.woozoo73.ht.writer.Writer;
+public class Clazz {
 
-/**
- * Invocation callback write the invocation.
- * 
- * @author woozoo73
- */
-public class WriterCallback implements InvocationCallback {
+	private Object value;
 
-	private Writer writer;
-
-	@Override
-	public void before(Invocation invocation) {
+	public Clazz() {
 	}
 
-	@Override
-	public void after(Invocation invocation) {
-		writer.write(invocation);
+	public Object getValue() {
+		return value;
 	}
 
-	public Writer getWriter() {
-		return writer;
-	}
-
-	public void setWriter(Writer writer) {
-		this.writer = writer;
+	public void setValue(Object value) {
+		this.value = value;
 	}
 
 }
