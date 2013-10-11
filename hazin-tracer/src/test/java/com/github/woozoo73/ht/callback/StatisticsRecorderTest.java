@@ -36,7 +36,7 @@ import com.github.woozoo73.ht.Invocation;
 import com.github.woozoo73.ht.stats.Record;
 
 @RunWith(MockitoJUnitRunner.class)
-public class StatsRecorderTest {
+public class StatisticsRecorderTest {
 
 	private StatisticsRecorder recorder;
 
