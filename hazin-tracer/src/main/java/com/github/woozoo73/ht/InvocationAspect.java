@@ -52,7 +52,15 @@ public class InvocationAspect {
 		}
 	}
 
-	@Pointcut("!within(com.github.woozoo73.ht..*) && !cflow(execution(String *.toString())) && !within(java.sql..*+) && !cflow(execution(* java.sql..*+.*(..))) && !cflow(execution(* com.github.woozoo73.ht..*.*(..)))")
+	@Pointcut("!within(com.github.woozoo73.ht..*) && !within(java.lang.Throwable+)")
+	public void excludeWithinPointcut() {
+	}
+
+	@Pointcut("!cflow(execution(String *.toString())) && !within(java.sql..*+) && !cflow(execution(* java.sql..*+.*(..))) && !cflow(execution(* com.github.woozoo73.ht..*.*(..)))")
+	public void excludeCflowPointcut() {
+	}
+
+	@Pointcut("excludeWithinPointcut() && excludeCflowPointcut()")
 	public void excludePointcut() {
 	}
 
