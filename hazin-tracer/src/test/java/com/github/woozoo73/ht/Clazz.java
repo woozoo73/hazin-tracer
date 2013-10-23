@@ -15,6 +15,11 @@
  */
 package com.github.woozoo73.ht;
 
+/**
+ * Test class.
+ * 
+ * @author woozoo73
+ */
 public class Clazz {
 
 	private Object value;
