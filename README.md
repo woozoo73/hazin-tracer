@@ -3,13 +3,18 @@ hazin-tracer
 
 Java profiler using AOP.
 
-JUnit ProcessorTest
+#####JUnit test class
 
-VM arguments:
--javaagent:~/.m2/repository/org/aspectj/aspectjweaver/1.7.2/aspectjweaver-1.7.2.jar
--Dht.format=com.github.woozoo73.ht.format.TextFormat
--Dht.writer=com.github.woozoo73.ht.writer.ConsoleWriter
--Dht.classfilter.pattern=com.github.woozoo73.test.dummy.ProcessorImpl
+    com.github.woozoo73.test.dummy.ProcessorTest
+
+#####VM arguments
+
+    -javaagent:~/.m2/repository/org/aspectj/aspectjweaver/1.7.2/aspectjweaver-1.7.2.jar
+    -Dht.format=com.github.woozoo73.ht.format.TextFormat
+    -Dht.writer=com.github.woozoo73.ht.writer.ConsoleWriter
+    -Dht.classfilter.pattern=com.github.woozoo73.test.dummy.ProcessorImpl
+
+#####Output
 
     ----> com.github.woozoo73.test.dummy.ProcessorImpl.process(foo) (ProcessorImpl.java:31) (628.74ms:100.00%)
         ----> com.github.woozoo73.test.dummy.Timer.sleep(10) (Timer.java:20) (13.13ms:2.15%)
@@ -70,13 +75,14 @@ VM arguments:
         <---- Hello, foo. (596.89ms:97.85%)
     <---- Hello, foo.  (628.74ms:100.00%)
 
-JUnit ProcessorTest
+#####VM arguments
 
-VM arguments:
--javaagent:~/.m2/repository/org/aspectj/aspectjweaver/1.7.2/aspectjweaver-1.7.2.jar
--Dht.format=com.github.woozoo73.ht.format.XmlFormat
--Dht.writer=com.github.woozoo73.ht.writer.ConsoleWriter
--Dht.classfilter.pattern=com.github.woozoo73.test.dummy.ProcessorImpl
+    -javaagent:~/.m2/repository/org/aspectj/aspectjweaver/1.7.2/aspectjweaver-1.7.2.jar
+    -Dht.format=com.github.woozoo73.ht.format.XmlFormat
+    -Dht.writer=com.github.woozoo73.ht.writer.ConsoleWriter
+    -Dht.classfilter.pattern=com.github.woozoo73.test.dummy.ProcessorImpl
+
+#####Output
 
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <invocation durationPercentage="100.0" durationNanoTime="539123831" depth="0">
