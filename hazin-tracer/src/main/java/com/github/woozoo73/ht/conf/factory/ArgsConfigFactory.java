@@ -17,7 +17,6 @@ package com.github.woozoo73.ht.conf.factory;
 
 import com.github.woozoo73.ht.callback.WriterCallback;
 import com.github.woozoo73.ht.conf.Config;
-import com.github.woozoo73.ht.filter.ClassFilter;
 import com.github.woozoo73.ht.format.Format;
 import com.github.woozoo73.ht.format.TextFormat;
 import com.github.woozoo73.ht.writer.LogWriter;
@@ -52,10 +51,6 @@ public class ArgsConfigFactory implements ConfigFactory {
 			writerCallback.setWriter(writer);
 
 			config.setInvocationCallback(writerCallback);
-
-			ClassFilter classFilter = new ClassFilter();
-			classFilter.setPattern(System.getProperty("ht.classfilter.pattern", "*"));
-			config.setFilter(classFilter);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

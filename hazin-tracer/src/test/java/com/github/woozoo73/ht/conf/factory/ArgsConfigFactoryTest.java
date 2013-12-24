@@ -25,8 +25,6 @@ import org.junit.Test;
 import com.github.woozoo73.ht.callback.InvocationCallback;
 import com.github.woozoo73.ht.callback.WriterCallback;
 import com.github.woozoo73.ht.conf.Config;
-import com.github.woozoo73.ht.filter.ClassFilter;
-import com.github.woozoo73.ht.filter.Filter;
 import com.github.woozoo73.ht.format.Format;
 import com.github.woozoo73.ht.format.TextFormat;
 import com.github.woozoo73.ht.format.XmlFormat;
@@ -89,42 +87,6 @@ public class ArgsConfigFactoryTest {
 		Format format = writer.getFormat();
 
 		assertThat(format, instanceOf(XmlFormat.class));
-	}
-
-	@Test
-	public void testGetConfigFilter() {
-		factory = new ArgsConfigFactory();
-		Config config = factory.getConfig();
-
-		Filter filter = config.getFilter();
-
-		assertThat(filter, instanceOf(ClassFilter.class));
-	}
-
-	@Test
-	public void testGetConfigFilterPatternDefault() {
-		factory = new ArgsConfigFactory();
-		Config config = factory.getConfig();
-
-		Filter filter = config.getFilter();
-		ClassFilter classFilter = (ClassFilter) filter;
-		String pattern = classFilter.getPattern();
-
-		assertThat(pattern, is("*"));
-	}
-
-	@Test
-	public void testGetConfigFilterPatternDefined() {
-		System.setProperty("ht.classfilter.pattern", "foo.Foo*");
-
-		factory = new ArgsConfigFactory();
-		Config config = factory.getConfig();
-
-		Filter filter = config.getFilter();
-		ClassFilter classFilter = (ClassFilter) filter;
-		String pattern = classFilter.getPattern();
-
-		assertThat(pattern, is("foo.Foo*"));
 	}
 
 }

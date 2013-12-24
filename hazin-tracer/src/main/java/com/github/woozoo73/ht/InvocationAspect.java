@@ -33,7 +33,7 @@ import com.github.woozoo73.ht.conf.factory.ConfigFactory;
  * @author woozoo73
  */
 @Aspect
-public class InvocationAspect {
+public abstract class InvocationAspect {
 
 	private Config config;
 
@@ -43,8 +43,10 @@ public class InvocationAspect {
 
 	private void initConfig() {
 		try {
-			String configFactoryName = System.getProperty("ht.conf.factory", ArgsConfigFactory.class.getName());
-			ConfigFactory configFactory = (ConfigFactory) Class.forName(configFactoryName).newInstance();
+			String configFactoryName = System.getProperty("ht.conf.factory",
+					ArgsConfigFactory.class.getName());
+			ConfigFactory configFactory = (ConfigFactory) Class.forName(
+					configFactoryName).newInstance();
 
 			config = configFactory.getConfig();
 		} catch (Exception e) {
@@ -52,36 +54,40 @@ public class InvocationAspect {
 		}
 	}
 
-	@Pointcut("!within(com.github.woozoo73.ht..*) && !within(java.lang.Throwable+)")
-	public void excludeWithinPointcut() {
+	@Pointcut("within(com.github.woozoo73.ht..*) || within(java.lang.Throwable+)")
+	protected void excludeWithinPointcut() {
 	}
 
-	@Pointcut("!cflow(execution(String *.toString())) && !within(java.sql..*+) && !cflow(execution(* java.sql..*+.*(..))) && !cflow(execution(* com.github.woozoo73.ht..*.*(..)))")
-	public void excludeCflowPointcut() {
+	@Pointcut("cflow(execution(String *.toString())) || within(java.sql..*+) || cflow(execution(* java.sql..*+.*(..))) || cflow(execution(* com.github.woozoo73.ht..*.*(..)))")
+	protected void excludeCflowPointcut() {
 	}
 
-	@Pointcut("excludeWithinPointcut() && excludeCflowPointcut()")
-	public void excludePointcut() {
+	@Pointcut("excludeWithinPointcut() || excludeCflowPointcut() || additionalExcludePointcut()")
+	protected void excludePointcut() {
 	}
 
-	@Pointcut("excludePointcut() && execution(* *.*(..))")
-	public void executionPointcut() {
+	@Pointcut("!excludePointcut() && execution(* *.*(..))")
+	protected void executionPointcut() {
 	}
 
-	@Pointcut("excludePointcut() && initialization(*.new(..))")
-	public void initializationPointcut() {
+	@Pointcut("!excludePointcut() && initialization(*.new(..))")
+	protected void initializationPointcut() {
 	}
 
-	@Pointcut("executionPointcut() || initializationPointcut()")
-	public void profilePointcut() {
+	@Pointcut("cflow(endpointPointcut()) && (executionPointcut() || initializationPointcut())")
+	protected void profilePointcut() {
+	}
+
+	@Pointcut
+	protected abstract void endpointPointcut();
+
+	@Pointcut("if(false)")
+	protected void additionalExcludePointcut() {
 	}
 
 	@Before("profilePointcut()")
 	public void profileBefore(JoinPoint joinPoint) {
 		Invocation endpointInvocation = Context.getEndpointInvocation();
-		if (endpointInvocation == null && !config.getFilter().accept(joinPoint)) {
-			return;
-		}
 
 		Invocation invocation = new Invocation();
 		invocation.setJoinPoint(joinPoint);
@@ -148,7 +154,8 @@ public class InvocationAspect {
 			return null;
 		}
 
-		Invocation invocation = endpointInvocation.getInvocationByJoinPoint(joinPoint);
+		Invocation invocation = endpointInvocation
+				.getInvocationByJoinPoint(joinPoint);
 		if (invocation == null) {
 			return null;
 		}

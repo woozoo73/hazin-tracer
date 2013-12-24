@@ -24,7 +24,6 @@ import com.github.woozoo73.ht.callback.StatisticsRecorder;
 import com.github.woozoo73.ht.callback.WriterCallback;
 import com.github.woozoo73.ht.conf.Config;
 import com.github.woozoo73.ht.conf.factory.ConfigFactory;
-import com.github.woozoo73.ht.filter.ClassFilter;
 import com.github.woozoo73.ht.format.TextFormat;
 import com.github.woozoo73.ht.writer.ConsoleWriter;
 import com.github.woozoo73.ht.writer.Writer;
@@ -34,10 +33,6 @@ public class DummyConfigFactory implements ConfigFactory {
 	@Override
 	public Config getConfig() {
 		Config config = new Config();
-
-		ClassFilter filter = new ClassFilter();
-		filter.setPattern(ProcessorImpl.class.getName());
-		config.setFilter(filter);
 
 		CompositeCallback cc = new CompositeCallback();
 

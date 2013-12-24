@@ -8,7 +8,11 @@
 		<exclude within="com.github.woozoo73.test.dummy.*Dao" />
 	</weaver>
 	<aspects>
-		<aspect name="com.github.woozoo73.ht.InvocationAspect" />
+		<concrete-aspect name="com.github.woozoo73.ht.ConfiguredInvocationAspect"
+			extends="com.github.woozoo73.ht.InvocationAspect">
+			<pointcut name="endpointPointcut"
+				expression="execution(* com.github.woozoo73.test.dummy.ProcessorImpl.*(..))" />
+		</concrete-aspect>
 		<aspect name="com.github.woozoo73.ht.JdbcAspect" />
 	</aspects>
 </aspectj>

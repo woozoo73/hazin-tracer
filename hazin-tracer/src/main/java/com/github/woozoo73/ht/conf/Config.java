@@ -18,7 +18,6 @@ package com.github.woozoo73.ht.conf;
 import java.io.Serializable;
 
 import com.github.woozoo73.ht.callback.InvocationCallback;
-import com.github.woozoo73.ht.filter.Filter;
 
 /**
  * Configuration.
@@ -31,8 +30,6 @@ public class Config implements Serializable {
 
 	private InvocationCallback invocationCallback;
 
-	private Filter filter;
-
 	public InvocationCallback getInvocationCallback() {
 		return invocationCallback;
 	}
@@ -41,21 +38,11 @@ public class Config implements Serializable {
 		this.invocationCallback = invocationCallback;
 	}
 
-	public Filter getFilter() {
-		return filter;
-	}
-
-	public void setFilter(Filter filter) {
-		this.filter = filter;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Config [invocationCallback=");
 		builder.append(invocationCallback);
-		builder.append(", filter=");
-		builder.append(filter);
 		builder.append("]");
 		return builder.toString();
 	}
