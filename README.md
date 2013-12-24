@@ -13,6 +13,27 @@ Java profiler using AOP.
     -Dht.format=com.github.woozoo73.ht.format.TextFormat
     -Dht.writer=com.github.woozoo73.ht.writer.ConsoleWriter
 
+#####apo.xml
+
+    <!DOCTYPE aspectj PUBLIC
+            "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+    <aspectj>
+    	<weaver options="-verbose -showWeaveInfo -debug">
+    		<include within="com.github.woozoo73.ht..*" />
+    		<include within="com.github.woozoo73.test..*" />
+    		<include within="java.sql..*+" />
+    		<exclude within="com.github.woozoo73.test.dummy.*Dao" />
+    	</weaver>
+    	<aspects>
+    		<concrete-aspect name="com.github.woozoo73.ht.ConfiguredInvocationAspect"
+    			extends="com.github.woozoo73.ht.InvocationAspect">
+    			<pointcut name="endpointPointcut"
+    				expression="execution(* com.github.woozoo73.test.dummy.ProcessorImpl.*(..))" />
+    		</concrete-aspect>
+    		<aspect name="com.github.woozoo73.ht.JdbcAspect" />
+    	</aspects>
+    </aspectj>
+
 #####Output
 
     ----> com.github.woozoo73.test.dummy.ProcessorImpl.process(foo) (ProcessorImpl.java:31) (628.74ms:100.00%)
@@ -79,7 +100,6 @@ Java profiler using AOP.
     -javaagent:~/.m2/repository/org/aspectj/aspectjweaver/1.7.2/aspectjweaver-1.7.2.jar
     -Dht.format=com.github.woozoo73.ht.format.XmlFormat
     -Dht.writer=com.github.woozoo73.ht.writer.ConsoleWriter
-    -Dht.classfilter.pattern=com.github.woozoo73.test.dummy.ProcessorImpl
 
 #####Output
 
