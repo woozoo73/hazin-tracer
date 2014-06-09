@@ -15,6 +15,12 @@
  */
 package com.github.woozoo73.test.dummy;
 
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hsqldb.Server;
@@ -36,11 +42,14 @@ public class ProcessorTest extends AbstractSpringTestCase {
 
 	private Server server;
 
-	private String databasePath = "/hsqldb/test";
-
 	@Before
 	public void setUp() throws Exception {
 		startHsqldb();
+
+		try {
+			executeUpdate("CREATE TABLE USER ( ID VARCHAR(36) NOT NULL, NAME VARCHAR(100) NOT NULL )", null);
+		} catch (Exception e) {
+		}
 	}
 
 	@After
@@ -55,11 +64,8 @@ public class ProcessorTest extends AbstractSpringTestCase {
 
 	protected void startHsqldb() {
 		server = new Server();
-		server.setLogWriter(null);
-		// server.setLogWriter(new PrintWriter(System.out));
-		// server.setErrWriter(new PrintWriter(System.out));
-		server.setDatabasePath(0, databasePath);
-		server.setDatabaseName(0, "test");
+		server.setLogWriter(new PrintWriter(System.out));
+		server.setErrWriter(new PrintWriter(System.out));
 		server.start();
 	}
 
@@ -83,6 +89,47 @@ public class ProcessorTest extends AbstractSpringTestCase {
 	@Test(expected = IllegalStateException.class)
 	public void testProcessWithNull() {
 		processor.process(null);
+	}
+
+	private int executeUpdate(String sql, Object[] args) {
+		int result = 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = getConnection();
+			ps = con.prepareStatement(sql);
+			if (args != null) {
+				for (int i = 0; i < args.length; i++) {
+					ps.setObject(i + 1, args[i]);
+				}
+			}
+
+			result = ps.executeUpdate();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+
+		return result;
+	}
+
+	private Connection getConnection() throws Exception {
+		Connection con = DriverManager.getConnection("jdbc:hsqldb:mem:testdb", "SA", "");
+
+		return con;
 	}
 
 }

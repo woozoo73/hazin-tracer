@@ -23,8 +23,6 @@ import java.sql.SQLException;
 
 public class AbstractDao {
 
-	public static final String DATABASE_PATH = "/hsqldb/test";
-
 	public AbstractDao() {
 		super();
 	}
@@ -100,7 +98,7 @@ public class AbstractDao {
 	}
 
 	protected Connection getConnection() throws Exception {
-		Connection con = DriverManager.getConnection("jdbc:hsqldb:file:" + DATABASE_PATH, "SA", "");
+		Connection con = DriverManager.getConnection("jdbc:hsqldb:mem:testdb", "SA", "");
 
 		return con;
 	}

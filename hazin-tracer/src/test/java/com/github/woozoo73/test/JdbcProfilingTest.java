@@ -38,16 +38,9 @@ public class JdbcProfilingTest {
 
 	private Server server;
 
-	private String databasePath = "/hsqldb/test";
-
 	@Before
 	public void setUp() throws Exception {
-		server = new Server();
-		server.setLogWriter(new PrintWriter(System.out));
-		server.setErrWriter(new PrintWriter(System.out));
-		server.setDatabasePath(0, databasePath);
-		server.setDatabaseName(0, "test");
-		server.start();
+		startHsqldb();
 
 		try {
 			executeUpdate("CREATE TABLE USER ( ID VARCHAR(36) NOT NULL, NAME VARCHAR(100) NOT NULL )", null);
@@ -57,7 +50,22 @@ public class JdbcProfilingTest {
 
 	@After
 	public void tearDown() throws Exception {
-		server.shutdown();
+		shutdownHsqldb();
+	}
+
+	protected void startHsqldb() {
+		server = new Server();
+		server.setLogWriter(new PrintWriter(System.out));
+		server.setErrWriter(new PrintWriter(System.out));
+		server.start();
+	}
+
+	protected void shutdownHsqldb() {
+		try {
+			server.shutdown();
+		} catch (Exception t) {
+			logger.warn(t.getMessage(), t);
+		}
 	}
 
 	@Test
@@ -155,7 +163,7 @@ public class JdbcProfilingTest {
 	}
 
 	private Connection getConnection() throws Exception {
-		Connection con = DriverManager.getConnection("jdbc:hsqldb:file:" + databasePath, "SA", "");
+		Connection con = DriverManager.getConnection("jdbc:hsqldb:mem:testdb", "SA", "");
 
 		return con;
 	}
