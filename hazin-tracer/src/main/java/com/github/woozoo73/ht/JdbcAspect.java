@@ -58,7 +58,7 @@ public class JdbcAspect {
 	}
 
 	@Before("executePointcut()")
-	public void prfileBeforeExecute(JoinPoint joinPoint) {
+	public void profileBeforeExecute(JoinPoint joinPoint) {
 		Statement statement = (Statement) joinPoint.getTarget();
 		JdbcStatementInfo statementInfo = JdbcContext.get(statement);
 
@@ -70,7 +70,7 @@ public class JdbcAspect {
 	}
 
 	@After("executePointcut()")
-	public void prfileAfterExecute(JoinPoint joinPoint) {
+	public void profileAfterExecute(JoinPoint joinPoint) {
 		Statement statement = (Statement) joinPoint.getTarget();
 		JdbcStatementInfo statementInfo = JdbcContext.get(statement);
 
@@ -96,7 +96,7 @@ public class JdbcAspect {
 	}
 
 	@AfterThrowing(pointcut = "executePointcut()", throwing = "t")
-	public void prfileAfterThrowingExecute(JoinPoint joinPoint, Throwable t) {
+	public void profileAfterThrowingExecute(JoinPoint joinPoint, Throwable t) {
 		Statement statement = (Statement) joinPoint.getTarget();
 		JdbcStatementInfo statementInfo = JdbcContext.get(statement);
 
