@@ -9,7 +9,7 @@ Java profiler using AOP.
 
 ##### VM arguments
 
-    -javaagent:~/.m2/repository/org/aspectj/aspectjweaver/1.7.2/aspectjweaver-1.7.2.jar
+    -javaagent:/{your-home-path}/.m2/repository/org/aspectj/aspectjweaver/1.7.2/aspectjweaver-1.7.2.jar
     -Dht.format=com.github.woozoo73.ht.format.TextFormat
     -Dht.writer=com.github.woozoo73.ht.writer.ConsoleWriter
 
