@@ -13,7 +13,7 @@ Java profiler using AOP.
     -Dht.format=com.github.woozoo73.ht.format.TextFormat
     -Dht.writer=com.github.woozoo73.ht.writer.ConsoleWriter
 
-##### apo.xml
+##### aop.xml
 
     <!DOCTYPE aspectj PUBLIC
             "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
